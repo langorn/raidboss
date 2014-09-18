@@ -1,0 +1,286 @@
+{% load staticfiles %}
+<html>
+<head>
+
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{% static "js/typeahead.js" %} "></script>
+
+    <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/menu.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/grid.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/divider.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/icon.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/button.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
+
+
+</head>
+<body>
+
+{% block menu %}
+
+<div class="ui grid">
+	<div class="sixteen wide column">
+		<div class="ui menu">
+		  <a class="active item" href='/crm'>
+		    <i class="bolt icon red big"></i> RAID A BOSS
+		  </a>
+
+		  <a class="item" href='/crm/search/teacher/'>
+		    <i class="male icon big green"></i> Find Teammate
+		  </a>
+		  <a class="item" href='/crm/search/student/'>
+		    <i class="yellow exclamation icon big"></i> Recruit Quest
+		  </a>
+		  <a class="item" href='/teammate/login?next=aaa'>
+		    <i class="user icon big"></i> Login
+		  </a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+<!-- <div id="remote" style="margin:40px;">
+  <input class="typeahead" type="text" placeholder="Search Name, HP ,Address">
+</div> -->
+
+<div>
+	<h1><i class="big green bullhorn icon"></i> Recruit Teammate</h1>
+</div>
+<div>
+	<form method="post" action="/teammate/post_verify/">
+		{% csrf_token %}
+	<table class="ui table segment" >
+		{{topic_form}}
+
+		<tr>
+
+			<td>Dungeon/Instance/Boss
+			</td>
+			<td>
+				<div>
+					<select id="instance">
+						<option value="x">-Please Select Instance-
+					</select>
+					<input type="hidden" name="instance">
+				</div>
+			</td>
+		</tr>
+		<tr>
+
+			<td>Looking For
+			</td>
+			<td>
+
+				<div style="display:inline-block">
+					<select id="gameClass">
+						<option value="x">-Please Select Role-
+						</option>
+						<option value="0">TEAMMATE</option>
+						<option value="1">TANK</option>
+						<option value="2">HEALER</option>
+						<option value="3">DPSER</option>
+					</select>
+				</div>
+<br>
+
+
+<!-- 				<div style="display:inline-block">
+					<select id="requirement">
+						<option value="x">-Please Select Instance-
+					</select>
+				</div>
+
+				<div style="display:inline-block">
+					Value<input type="text" name="requireVal" id="requireVal">
+				</div>
+
+				<div style="display:inline-block"><button id="addAttr" class="tiny ui button">ADD</button></div>
+ -->
+
+
+				<div id="AttrDisplay">
+					
+					{{ items_forms.management_form }}
+					<div id="items-form-container">
+					    {% for item_form in items_forms %}
+					        <div id="item-{{ forloop.counter0 }}">
+					            {{ item_form.id }}
+					            {{ item_form.as_p }}
+					            {# <!-- or for crispy forms --> {% crispy item_form %} #}
+					        </div>
+					    {% endfor %}
+					</div>
+					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
+				</div>
+
+				<div id="AttrGroup"></div>
+			</td>
+		</tr>
+
+
+
+
+
+	<tr>
+		<td></td>
+		<td><input type="submit" value="SUBMIT" class="ui button green"></td>
+	</tr>
+	</table>
+
+</div>
+
+
+<script type="text/html" id="item-template">
+<div id="item-__prefix__">
+	{{items_forms.empty_form }}
+</div>
+</script>
+</form>
+<script>
+$(document).ready(function() {
+    $('.add-item').click(function(ev) {
+        ev.preventDefault();
+        var count = $('#items-form-container').children().length;
+        var tmplMarkup = $('#item-template').html();
+        console.log(tmplMarkup);
+        var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+        $('div#items-form-container').append(compiledTmpl);
+
+        // update form count
+        $('#id_item_items-TOTAL_FORMS').attr('value', count+1);
+
+        // some animate to scroll to view our new form
+        $('html, body').animate({
+                scrollTop: $("#add-item-button").position().top-200
+            }, 800);
+    });
+});
+</script>
+
+<script>
+
+	var bestPictures = new Bloodhound({
+	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
+	  queryTokenizer: Bloodhound.tokenizers.whitespace,
+	  remote: {
+		    url: '/crm/ajax_search/%QUERY',
+		    filter: function(list) {
+		    	
+		      return $.map(list, function(country) { //console.log(country); 
+		      	return { name: country.fields.name, pk:country.pk }; });
+		    }
+	   }	   
+	  });
+	 
+	bestPictures.initialize();
+	 
+	$('#remote .typeahead').typeahead(
+		{
+			highlight:true
+		},
+		{
+	  	name: 'pk',
+	 	displayKey: 'name',
+	 	valueKey:'pk',
+	    source: bestPictures.ttAdapter(),
+	    template: [ '<p class="name">{{pk}}</p>',
+	    '<p class="lang">{{pk}}</p>'].join('')	})
+
+		.bind("typeahead:selected", function(obj, datum, name) {
+			console.log( datum, name);
+			if(!datum){
+				return
+			}
+				var id = datum.pk
+			window.location.href = '/crm/student/'+datum.pk;
+		});
+
+		$('.delete').click(function(){
+			var ans = confirm("Are you sure you want to Delete this Record?");
+			if(!ans){
+				return false
+			}
+		})
+
+
+		$('#id_game_name').change(function(){
+			var game_id = $(this).val()
+			$.getJSON('/teammate/getInstance/'+game_id,function(data){
+					var options = '';
+					for(var k in data){
+						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+					}
+					$('#instance').html(options)
+			})
+
+			$.getJSON('/teammate/getAttrs/'+game_id,function(data){
+					var options = '';
+					for(var k in data){
+						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+					}
+					$('#requirement').html(options)
+			})
+
+		})
+
+		$('#instance').change(function(){
+			var instance = $(this).val();
+			$('input[name="instance"]').val(instance);
+
+		})
+
+		$('td').on('click','#addAttr',function(){
+
+			var title = $('#requirement option:selected').text();
+			var val = $('#requireVal').val();
+			if(!title){
+				alert('you need title');
+				return 
+			}
+			if(!val){
+				alert('you need value');
+			}
+
+
+			var attrData = '';
+
+			attrData += '<div>'+title+':'+val+'<i class="ui delete icon"></i></div>'
+			$('#AttrDisplay').append(attrData);
+
+
+			var AttrGroup = '';
+			var game = '';
+			var topic = '';
+
+			AttrGroup += '<input type="hidden" name="games[]" value="'+game+'">';
+			AttrGroup += '<input type="hidden" name="attributes[]" value="'+title+'">';
+			AttrGroup += '<input type="hidden" name="value[]" value="'+val+'">';
+			AttrGroup += '<input type="hidden" name="topic[]" value="'+topic+'" ';
+			$('#AttrGroup').append(AttrGroup);
+
+		})
+
+		$(function(){
+
+				//$('body').on('mouseover', 'form input:checkbox', function(){
+
+				$('body').on('click','input:checkbox',function(){
+					$(this).parent('div').hide();
+				})
+
+
+
+		})
+
+
+
+</script>
+</body>
+</html>

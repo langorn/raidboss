@@ -1,0 +1,237 @@
+{% load staticfiles %}
+<html>
+<head>
+
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{% static "js/typeahead.js" %} "></script>
+<!-- <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> -->
+	<script src="{% static "js/jspkg/jquery.dynatable.js" %} "></script>
+	<link rel=stylesheet type="text/css" href="{% static "js/jspkg/jquery.dynatable.css" %} " href="external-stylesheet.css">
+
+    <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/menu.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/grid.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/divider.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/icon.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/button.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" >
+
+</head>
+<body>
+
+{% block menu %}
+
+<div class="ui grid">
+	<div class="sixteen wide column">
+		<div class="ui menu">
+		  <a class="active item" href='/teammate'>
+		    <i class="rocket icon red big"></i> RAID A BOSS
+		  </a>
+
+		  <a class="item" href='/temmmate/find/'>
+		    <i class="male icon big green"></i> Find Teammate
+		  </a>
+		  <a class="item" href='/teammate/quest/post/'>
+		    <i class="yellow exclamation icon big"></i> Post Quest
+		  </a>
+		  <a class="item" href='/teammate/login?next=aaa'>
+		    <i class="user icon big"></i> Login
+		  </a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block postform %}
+
+<div id="remote" style="margin:40px;">
+ <select id="theGame">
+{% for g in game %}
+	<option value="{{g.pk}}">{{g.name}}</option>
+{% endfor%}
+</select>
+  <input class="typeahead" type="text" placeholder="Search Name, HP ,Address">
+</div>
+<div>
+<!-- 	<table class="ui table segment" >
+		<thead>
+			<tr>
+				<th>NAME</th>
+				<th></th>
+				<th>ACTION</th>
+			</tr>
+		</thead>
+	{% for result in result_list %}
+		{% if result.active %}
+			<tr>
+				<td><a href="/crm/{{keyword}}/{{result.id}}/">{{result.name}}</a> </td>
+				<td></td>
+				<td><a href="/crm/{{keyword}}/delete/{{result.id}}"><button class="ui red button tiny delete">Delete</button></a></td>
+
+			</tr>
+		{% endif %}
+	{% endfor %}
+
+	</table> -->
+
+</div>
+
+{% endblock %}
+<script>
+
+		var raidBoss = {
+			topicList : function(theGame, InstanceName){
+
+				$.getJSON('/teammate/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
+					$('#raidBossTB tbody').html('');
+					var tdata = '';
+					for(d in data){
+						tdata += '<tr><td><a href="/teammate/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
+					}		
+					$('#raidBossTB tbody').html(tdata);
+
+
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+			        console.log("error " + textStatus);
+			        console.log("incoming Text " + jqXHR.responseText);
+    			})
+			},
+			topics: function(){
+
+
+				$.getJSON('/teammate/topics',function(data){
+					console.log(data);
+
+					$('#raidBossTB tbody').html('');
+					var tdata = '';
+					for(d in data){
+						tdata += '<tr><td><a href="/teammate/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
+					}		
+
+
+					$('#raidBossTB tbody').html(tdata);
+
+
+
+
+
+					// $('#example').dynatable({
+					//   dataset: {
+					//     records: tdata
+					//   },
+					//   writers:{
+					//   	_rowWrite: ulWriter
+					//   },
+					//   readers:{
+					//   	_rowReader: ulReader
+					//   }
+					// });
+
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+			        console.log("error " + textStatus);
+			        console.log("incoming Text " + jqXHR.responseText);
+    			})
+			}
+		}
+
+
+	var bestPictures = new Bloodhound({
+	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
+	  queryTokenizer: Bloodhound.tokenizers.whitespace,
+	  remote: {
+		    url: '/teammate/ajax_search/%QUERY',
+		    filter: function(list) {
+		    	
+		      return $.map(list, function(country) { //console.log(country); 
+		      	return { name: country.fields.name, pk:country.pk }; });
+		    }
+	   }	   
+	  });
+	 
+	bestPictures.initialize();
+	 
+	$('#remote .typeahead').typeahead(
+		{
+			highlight:true
+		},
+		{
+	  	name: 'pk',
+	 	displayKey: 'name',
+	 	valueKey:'pk',
+	    source: bestPictures.ttAdapter(),
+	    template: [ '<p class="name">{{pk}}</p>',
+	    '<p class="lang">{{pk}}</p>'].join('')	})
+
+		.bind("typeahead:selected", function(obj, datum, name) {
+			
+			if(!datum){
+				return
+			}
+				var id = datum.pk
+			//window.location.href = '/crm/student/'+datum.pk;
+			var theGame = $('#theGame').val();
+			var InstanceName = datum.name;
+			raidBoss.topicList(theGame, InstanceName)
+			console.log( datum, name);
+
+		});
+
+		$('.delete').click(function(){
+			var ans = confirm("Are you sure you want to Delete this Record?");
+			if(!ans){
+				return false
+			}
+		})
+
+//load all 
+
+$(function(){
+	raidBoss.topics();
+})
+
+
+</script>
+
+<table id="raidBossTB" class="table ui">
+  <thead>
+    <th>Name</th>
+
+
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<!-- <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+ 
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Extn.</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </tfoot>
+    </table> -->
+</body>
+</html>

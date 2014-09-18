@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<html>
+<head>
+
+
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="{% static "js/typeahead.js" %} "></script>
+
+    <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/menu.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/grid.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/divider.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/icon.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/button.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
+
+
+</head>
+<body>
+
+{% block menu %}
+
+<div class="ui grid">
+	<div class="sixteen wide column">
+		<div class="ui menu">
+
+		  <a class="active item" href='/crm'>
+		    <i class="bolt icon red big"></i> RAID A BOSS
+		  </a>
+
+		  <a class="item" href='/crm/search/teacher/'>
+		    <i class="male icon big green"></i> Find Teammate
+		  </a>
+		  <a class="item" href='/crm/search/student/'>
+		    <i class="exclamation icon big orange"></i> Post Quest
+		  </a>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
+<h1>REGISTER</h1>
+<table class="tableX ui table segment">	
+<form method="POST" action="/teammate/register/">
+	{% csrf_token %}
+	{{user_form.as_table}}
+{{ profile_form.as_table }}
+<tr>
+	<td></td>
+	<td>
+		<input type="submit" class=" green button ui" value="SUBMIT">
+</tr>
+</table>
+</form>
+</body>
+</html>
