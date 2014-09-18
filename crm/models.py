@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-import scrapy
-from scrapy.contrib.djangoitem import DjangoItem
+# import scrapy
+# from scrapy.contrib.djangoitem import DjangoItem
 
 class Topic(models.Model):
 	title = models.CharField(max_length=200)
@@ -17,8 +17,8 @@ class GrabData(models.Model):
 	created_date = models.DateTimeField(auto_now=True)
 	status = models.BooleanField()
 
-class TopicItem(DjangoItem):
-	django_model = GrabData
+# class TopicItem(DjangoItem):
+# 	django_model = GrabData
 
 class MainRole(models.Model):
 	name = models.CharField(max_length=200)
