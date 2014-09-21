@@ -34,7 +34,7 @@ def user_login(request):
 		user = request.POST['username']	
 		password = request.POST['password']
 		next = request.POST['next']
-		user = authenticate(username=username, password=password)
+		user = authenticate(username=user, password=password)
 		if user is not None:
 			if user.is_active:
 				print 'useris active'
