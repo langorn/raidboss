@@ -160,7 +160,7 @@ def topic_search(request, game_id, instance_name):
 	return HttpResponse(result,mimetype="application/json")
 
 def topics(request):
-	result_list = Game.objects.all()
+	result_list = Topic.objects.all()
 	result = serializers.serialize('json', result_list)
 	return HttpResponse(result,mimetype="application/json")
 
