@@ -100,11 +100,11 @@
 		var raidBoss = {
 			topicList : function(theGame, InstanceName){
 
-				$.getJSON('/teammate/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
+				$.getJSON('/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
 					$('#raidBossTB tbody').html('');
 					var tdata = '';
 					for(d in data){
-						tdata += '<tr><td><a href="/teammate/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
+						tdata += '<tr><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
 					}		
 					$('#raidBossTB tbody').html(tdata);
 
@@ -124,7 +124,7 @@
 					$('#raidBossTB tbody').html('');
 					var tdata = '';
 					for(d in data){
-						tdata += '<tr><td><a href="/teammate/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
+						tdata += '<tr><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
 					}		
 
 
@@ -159,7 +159,7 @@
 	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
 	  queryTokenizer: Bloodhound.tokenizers.whitespace,
 	  remote: {
-		    url: '/teammate/ajax_search/%QUERY',
+		    url: '/ajax_search/%QUERY',
 		    filter: function(list) {
 		    	
 		      return $.map(list, function(country) { //console.log(country); 

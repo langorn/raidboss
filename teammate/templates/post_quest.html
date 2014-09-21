@@ -216,7 +216,7 @@ $(document).ready(function() {
 
 		$('#id_game_name').change(function(){
 			var game_id = $(this).val()
-			$.getJSON('/teammate/getInstance/'+game_id,function(data){
+			$.getJSON('/getInstance/'+game_id,function(data){
 					var options = '';
 					for(var k in data){
 						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
@@ -224,7 +224,7 @@ $(document).ready(function() {
 					$('#instance').html(options)
 			})
 
-			$.getJSON('/teammate/getAttrs/'+game_id,function(data){
+			$.getJSON('/getAttrs/'+game_id,function(data){
 					var options = '';
 					for(var k in data){
 						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
