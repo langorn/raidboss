@@ -58,7 +58,7 @@
 	<h1><i class="big green bullhorn icon"></i> Recruit Teammate</h1>
 </div>
 <div class="ui form">
-	<form method="post" action="/teammate/post_verify/">
+	<form method="post" action="/post_verify/">
 		{% csrf_token %}
 	<table class="ui table segment" >
 		{{topic_form}}
@@ -223,6 +223,7 @@ $(document).ready(function() {
 					}
 					$('#instance').html(options)
 			})
+
 
 			$.getJSON('/getAttrs/'+game_id,function(data){
 					var options = '';
