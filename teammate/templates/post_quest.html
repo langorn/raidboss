@@ -6,6 +6,10 @@
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="{% static "js/typeahead.js" %} "></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+
+
     <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
@@ -28,17 +32,17 @@
 <div class="ui grid">
 	<div class="sixteen wide column">
 		<div class="ui menu">
-		  <a class="active item" href='/crm'>
-		    <i class="bolt icon red big"></i> RAID A BOSS
+		  <a class="active item" href='/'>
+		    <i class="rocket icon red big"></i> RAID A BOSS
 		  </a>
 
-		  <a class="item" href='/crm/search/teacher/'>
+		  <a class="item" href='/'>
 		    <i class="male icon big green"></i> Find Teammate
 		  </a>
-		  <a class="item" href='/crm/search/student/'>
-		    <i class="yellow exclamation icon big"></i> Recruit Quest
+		  <a class="item" href='/quest/post/'>
+		    <i class="yellow exclamation icon big"></i> Post Quest
 		  </a>
-		  <a class="item" href='/teammate/login?next=aaa'>
+		  <a class="item" href='/login?next=aaa'>
 		    <i class="user icon big"></i> Login
 		  </a>
 		</div>
@@ -53,7 +57,7 @@
 <div>
 	<h1><i class="big green bullhorn icon"></i> Recruit Teammate</h1>
 </div>
-<div>
+<div class="ui form">
 	<form method="post" action="/teammate/post_verify/">
 		{% csrf_token %}
 	<table class="ui table segment" >
@@ -79,7 +83,7 @@
 			<td>
 
 				<div style="display:inline-block">
-					<select id="gameClass">
+					<select id="gameClass"  class="form-control">
 						<option value="x">-Please Select Role-
 						</option>
 						<option value="0">TEAMMATE</option>
@@ -274,6 +278,9 @@ $(document).ready(function() {
 				$('body').on('click','input:checkbox',function(){
 					$(this).parent('div').hide();
 				})
+
+
+			$('select').addClass('form-control');
 
 
 

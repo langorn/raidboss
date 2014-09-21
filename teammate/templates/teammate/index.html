@@ -5,6 +5,9 @@
 
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="{% static "js/typeahead.js" %} "></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
 <!-- <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> -->
 	<script src="{% static "js/jspkg/jquery.dynatable.js" %} "></script>
 	<link rel=stylesheet type="text/css" href="{% static "js/jspkg/jquery.dynatable.css" %} " href="external-stylesheet.css">
@@ -32,17 +35,17 @@
 <div class="ui grid">
 	<div class="sixteen wide column">
 		<div class="ui menu">
-		  <a class="active item" href='/teammate'>
+		  <a class="active item" href='/'>
 		    <i class="rocket icon red big"></i> RAID A BOSS
 		  </a>
 
-		  <a class="item" href='/temmmate/find/'>
+		  <a class="item" href='/'>
 		    <i class="male icon big green"></i> Find Teammate
 		  </a>
-		  <a class="item" href='/teammate/quest/post/'>
+		  <a class="item" href='/quest/post/'>
 		    <i class="yellow exclamation icon big"></i> Post Quest
 		  </a>
-		  <a class="item" href='/teammate/login?next=aaa'>
+		  <a class="item" href='/login?next=aaa'>
 		    <i class="user icon big"></i> Login
 		  </a>
 		</div>
@@ -52,12 +55,20 @@
 {% block postform %}
 
 <div id="remote" style="margin:40px;">
- <select id="theGame">
-{% for g in game %}
-	<option value="{{g.pk}}">{{g.name}}</option>
-{% endfor%}
-</select>
-  <input class="typeahead" type="text" placeholder="Search Name, HP ,Address">
+	
+	<div style="display:inline-block;height:30px;vertical-align:top">
+		<select id="theGame"  class="form-control"> 
+		{% for g in game %}
+			<option value="{{g.pk}}">{{g.name}}</option>
+		{% endfor%}
+		</select>
+	</div>
+
+
+
+	<div style="display:inline-block;height:30px;vertical-align:middle">
+   		<input class="typeahead" type="text" placeholder="Search Name, HP ,Address">
+   	</div>
 </div>
 <div>
 <!-- 	<table class="ui table segment" >

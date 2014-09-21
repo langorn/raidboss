@@ -29,22 +29,23 @@
 {% block menu %}
 
 <div class="ui grid">
-	<div class="sixteen wide column">
-		<div class="ui menu">
+  <div class="sixteen wide column">
+    <div class="ui menu">
+      <a class="active item" href='/'>
+        <i class="rocket icon red big"></i> RAID A BOSS
+      </a>
 
-		  <a class="active item" href='/crm'>
-		    <i class="bolt icon red big"></i> RAID A BOSS
-		  </a>
-
-		  <a class="item" href='/crm/search/teacher/'>
-		    <i class="male icon big green"></i> Find Teammate
-		  </a>
-		  <a class="item" href='/crm/search/student/'>
-		    <i class="exclamation icon big orange"></i> Post Quest
-		  </a>
-
-		</div>
-	</div>
+      <a class="item" href='/'>
+        <i class="male icon big green"></i> Find Teammate
+      </a>
+      <a class="item" href='/quest/post/'>
+        <i class="yellow exclamation icon big"></i> Post Quest
+      </a>
+      <a class="item" href='/login?next=aaa'>
+        <i class="user icon big"></i> Login
+      </a>
+    </div>
+  </div>
 </div>
 {% endblock %}
 
