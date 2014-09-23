@@ -25,6 +25,8 @@ urlpatterns = patterns('',
 	url(r'^topics/$',views.topics, name='topics'),
 	url(r'^topic/(?P<topic_id>\d+)/$',views.get_topic, name='topic_get'),
 	
-
+	#create comment
+	url(r'^comment/create/(?P<topic_id>\d+)/$',views.post_comment,name='comment_create'),
+	
 
 )

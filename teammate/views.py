@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response
 from teammate.forms import UserForm, UserProfileForm, TopicForm
-from teammate.models import Game, Instance, Attributes
+from teammate.models import Game, Instance, Attributes,Comment
 from django.db.models import Q
 
 from django import forms
@@ -166,10 +166,21 @@ def topics(request):
 
 def get_topic(request,topic_id):
 	topic = Topic.objects.get(pk=topic_id)
+	try:
+		comments = Comment.objects.filter(topic_name=topic)
+	except:
+		comments = []
 	print topic
-	context = {'topic':topic}	
+	context = {'topic':topic,'comments':comments}	
 	return render(request,'topic.html',context)
 
+def post_comment(request,topic_id):
+	topic = Topic.objects.get(pk=topic_id)
+	user = request.user
+	msg = request.POST.get('message')
+	cm = Comment(topic_name=topic, user_name=user,message=msg)
+	cm.save()
+	return HttpResponseRedirect('/')
 def chat(request):
 	return render(request,'chat.html')
 
