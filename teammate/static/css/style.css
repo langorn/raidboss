@@ -190,3 +190,15 @@ body table a{
 	text-decoration:none;
 	color:black;
 }
+
+.toLeft input, .toLeft select{
+  display:inline-block;
+  width:100px !important;
+}
+
+.items-form-container input, .items-form-container select{
+  display:inline-block;
+  width:100px !important;
+}
+
+

@@ -43,7 +43,7 @@
 		  <a class="item" href='/quest/post/'>
 		    <i class="yellow exclamation icon big"></i> Post Quest
 		  </a>
-		  <a class="item" href='/login?next=aaa'>
+		  <a class="item" href='/login?next=/'>
 		    <i class="user icon big"></i> Login
 		  </a>
 		</div>
@@ -62,6 +62,11 @@
 	<form method="post" action="/post_verify/">
 		{% csrf_token %}
 	<table class="ui table segment" >
+
+		<thead>
+			<td width="20%"></td>
+			<td width="80%"></td>
+		<thead>
 		{{topic_form}}
 
 		<tr>
@@ -71,7 +76,7 @@
 			<td>
 				<div>
 					<select id="instance">
-						<option value="x">-Please Select Instance-
+						<option value="x">-Please Select Instance-</option>
 					</select>
 					<input type="hidden" name="instance">
 				</div>
@@ -115,9 +120,18 @@
 					{{ items_forms.management_form }}
 					<div id="items-form-container">
 					    {% for item_form in items_forms %}
-					        <div id="item-{{ forloop.counter0 }}">
+					        <div class="toLeft" id="item-{{ forloop.counter0 }}">
+					        	<b>Games</b>
 					            {{ item_form.id }}
-					            {{ item_form.as_p }}
+					            {{ item_form.games }}
+					            <b>Attributes</b>
+					            {{ item_form.id }}
+					            {{ item_form.attributes }}
+
+					            <b>Value</b>
+					           {{ item_form.id }}
+					           {{ item_form.value }}
+
 					            {# <!-- or for crispy forms --> {% crispy item_form %} #}
 					        </div>
 					    {% endfor %}
@@ -125,7 +139,7 @@
 					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
 				</div>
 
-				<div id="AttrGroup"></div>
+				<div id="AttrGroup" class="toLeft"></div>
 			</td>
 		</tr>
 
@@ -143,7 +157,7 @@
 
 
 <script type="text/html" id="item-template">
-<div id="item-__prefix__">
+<div id="item-__prefix__" class="toLeft">
 	{{items_forms.empty_form }}
 </div>
 </script>
@@ -165,6 +179,11 @@ $(document).ready(function() {
         $('html, body').animate({
                 scrollTop: $("#add-item-button").position().top-200
             }, 800);
+
+
+        $('.toLeft').find('select').addClass('form-control');
+        $('.toLeft').children('input').addClass('form-control');
+
     });
 });
 </script>
@@ -218,7 +237,8 @@ $(document).ready(function() {
 		$('#id_game_name').change(function(){
 			var game_id = $(this).val()
 			$.getJSON('/getInstance/'+game_id,function(data){
-					var options = '';
+					var options = '<option value="x">-Please Select Instance-</option>';
+
 					for(var k in data){
 						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
 					}
@@ -244,48 +264,41 @@ $(document).ready(function() {
 
 		$('td').on('click','#addAttr',function(){
 
-			var title = $('#requirement option:selected').text();
-			var val = $('#requireVal').val();
-			if(!title){
-				alert('you need title');
-				return 
-			}
-			if(!val){
-				alert('you need value');
-			}
+			// var title = $('#requirement option:selected').text();
+			// var val = $('#requireVal').val();
+			// if(!title){
+			// 	alert('you need title');
+			// 	return 
+			// }
+			// if(!val){
+			// 	alert('you need value');
+			// }
 
 
-			var attrData = '';
+			// var attrData = '';
 
-			attrData += '<div>'+title+':'+val+'<i class="ui delete icon"></i></div>'
-			$('#AttrDisplay').append(attrData);
+			// attrData += '<div>'+title+':'+val+'<i class="ui delete icon"></i></div>'
+			// $('#AttrDisplay').append(attrData);
 
 
-			var AttrGroup = '';
-			var game = '';
-			var topic = '';
+			// var AttrGroup = '';
+			// var game = '';
+			// var topic = '';
 
-			AttrGroup += '<input type="hidden" name="games[]" value="'+game+'">';
-			AttrGroup += '<input type="hidden" name="attributes[]" value="'+title+'">';
-			AttrGroup += '<input type="hidden" name="value[]" value="'+val+'">';
-			AttrGroup += '<input type="hidden" name="topic[]" value="'+topic+'" ';
-			$('#AttrGroup').append(AttrGroup);
+			// AttrGroup += '<input type="hidden" name="games[]" value="'+game+'">';
+			// AttrGroup += '<input type="hidden" name="attributes[]" value="'+title+'">';
+			// AttrGroup += '<input type="hidden" name="value[]" value="'+val+'">';
+			// AttrGroup += '<input type="hidden" name="topic[]" value="'+topic+'" ';
+			// $('#AttrGroup').append(AttrGroup);
 
 		})
 
 		$(function(){
-
 				//$('body').on('mouseover', 'form input:checkbox', function(){
-
 				$('body').on('click','input:checkbox',function(){
 					$(this).parent('div').hide();
 				})
-
-
 			$('select').addClass('form-control');
-
-
-
 		})
 
 
