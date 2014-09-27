@@ -7,13 +7,15 @@
 	<script src="{% static "js/typeahead.js" %} "></script>
 <title>Gamer Look For Group Website</title>
 <meta name="description" content="for gamer who looking for adventure/dungeon group.">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
 
 <!-- <script src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script> -->
 	<script src="{% static "js/jspkg/jquery.dynatable.js" %} "></script>
 	<link rel=stylesheet type="text/css" href="{% static "js/jspkg/jquery.dynatable.css" %} " href="external-stylesheet.css">
 
-    <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
+    <link rel=stylesheet type="text/css" href="{% static "css/style1.css" %} " href="external-stylesheet.css">
+
+
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/menu.min.css" %} " href="external-stylesheet.css">
@@ -24,15 +26,34 @@
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
+
 
     <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css" >
 
+
+    <link href="{% static "css/bootstrap.min.css" %} " rel="stylesheet">
+
+    <!-- Custom -->
+    <link href="{% static "css/custom.css" %} "  rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+    <!-- fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static "font-awesome-4.0.3/css/font-awesome.min.css" %} ">
+
+    <!-- CSS STYLE-->
+<!--     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %} "  media="screen" /> -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/tyhead.css" %} "  media="screen" />
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="{% static "rs-plugin/css/settings.css" %} "  media="screen" />
 </head>
 <body>
-
-{% block menu %}
-
 <div class="ui grid">
 	<div class="sixteen wide column">
 		<div class="ui menu">
@@ -52,198 +73,346 @@
 		</div>
 	</div>
 </div>
-{% endblock %}
-{% block postform %}
-
-<div id="remote" style="margin:40px;">
-	
-	<div style="display:inline-block;height:30px;vertical-align:top">
-		<select id="theGame"  class="form-control"> 
-		{% for g in game %}
-			<option value="{{g.pk}}">{{g.name}}</option>
-		{% endfor%}
-		</select>
-	</div>
 
 
+   <div class="container-fluid">
 
-	<div style="display:inline-block;height:30px;vertical-align:middle">
-   		<input class="typeahead" type="text" placeholder="Search Name, HP ,Address">
-   	</div>
-</div>
-<div>
-<!-- 	<table class="ui table segment" >
-		<thead>
-			<tr>
-				<th>NAME</th>
-				<th></th>
-				<th>ACTION</th>
-			</tr>
-		</thead>
-	{% for result in result_list %}
-		{% if result.active %}
-			<tr>
-				<td><a href="/crm/{{keyword}}/{{result.id}}/">{{result.name}}</a> </td>
-				<td></td>
-				<td><a href="/crm/{{keyword}}/delete/{{result.id}}"><button class="ui red button tiny delete">Delete</button></a></td>
+            <!-- Slider -->
+<!--             <div class="tp-banner-container">
+                <div class="tp-banner" >
+                    <ul>	
+                        <li data-transition="fade" data-slotamount="7" data-masterspeed="1500" >
+                            <img src="{% static "images/slide.jpg" %}"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+            <!-- //Slider -->
 
-			</tr>
-		{% endif %}
-	{% endfor %}
-
-	</table> -->
-
-</div>
-
-{% endblock %}
+            <div class="headernav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><!-- <a href="/"><img src="{% static "images/logo.jpg" %}" alt=""  /></a> --></div>
+                        <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
+<!--                         	<div class="dropdown">
+	                        	<ul class="dropdown" style="" role="menu">
+									<select id="theGame"  class="form-control"> 
+									{% for g in game %}
+										<option value="{{g.pk}}">{{g.name}}</option>
+									{% endfor%}
+									</select>
+								</ul>
+							</div> -->
 <script>
 
-		var raidBoss = {
-			topicList : function(theGame, InstanceName){
+$(document).ready(function(){
+	$('li ').click(function(){
 
-				$.getJSON('/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
-					$('#raidBossTB tbody').html('');
-					var tdata = '';
-					for(d in data){
-						tdata += '<tr><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.name+'</a><td></tr>';
-					}		
-					$('#raidBossTB tbody').html(tdata);
+	var keyword = $(this).text();
+	var gameId = $(this).find('a').attr('no');
+	$('.gameList a').html(keyword).attr('keyword',keyword);
+	$('#theGame').attr('no',gameId);
 
 
-				})
-				.error(function(jqXHR, textStatus, errorThrown) {
-			        console.log("error " + textStatus);
-			        console.log("incoming Text " + jqXHR.responseText);
-    			})
-			},
-			topics: function(){
-
-
-				$.getJSON('/topics',function(data){
-					console.log(data);
-
-					$('#raidBossTB tbody').html('');
-					var tdata = '';
-					for(d in data){
-						tdata += '<tr><td><i class="Shield icon ui"></i>Wildstar</td><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.title+'</a></td>';
-						tdata+='<td>'+data[d].fields.create_date+'</td>';
-						tdata+='<td>'+data[d].fields.quantity+'</td>';
-						tdata+='</tr>';
-					}		
-
-
-					$('#raidBossTB tbody').html(tdata);
-
-				})
-				.error(function(jqXHR, textStatus, errorThrown) {
-			        console.log("error " + textStatus);
-			        console.log("incoming Text " + jqXHR.responseText);
-    			})
-			}
-		}
-
-
-	var bestPictures = new Bloodhound({
-	  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
-	  queryTokenizer: Bloodhound.tokenizers.whitespace,
-	  remote: {
-		    url: '/ajax_search/%QUERY',
-		    filter: function(list) {
-		    	
-		      return $.map(list, function(country) { //console.log(country); 
-		      	return { name: country.fields.name, pk:country.pk }; });
-		    }
-	   }	   
-	  });
-	 
-	bestPictures.initialize();
-	 
-	$('#remote .typeahead').typeahead(
-		{
-			highlight:true
-		},
-		{
-	  	name: 'pk',
-	 	displayKey: 'name',
-	 	valueKey:'pk',
-	    source: bestPictures.ttAdapter(),
-	    template: [ '<p class="name">{{pk}}</p>',
-	    '<p class="lang">{{pk}}</p>'].join('')	})
-
-		.bind("typeahead:selected", function(obj, datum, name) {
-			
-			if(!datum){
-				return
-			}
-				var id = datum.pk
-			//window.location.href = '/crm/student/'+datum.pk;
-			var theGame = $('#theGame').val();
-			var InstanceName = datum.name;
-			raidBoss.topicList(theGame, InstanceName)
-			console.log( datum, name);
-		});
-
-		$('.delete').click(function(){
-			var ans = confirm("Are you sure you want to Delete this Record?");
-			if(!ans){
-				return false
-			}
-		})
-
-//load all 
-
-$(function(){
-	raidBoss.topics();
-})
-
+	})
+});  
 
 </script>
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-4867779-5', 'auto');
-  ga('send', 'pageview');
-
-</script>
+                        <div class="dropdown gameList">
+                                <a data-toggle="dropdown" id="theGame" href="#" class="dropdown-toggle" >Select Your Game</a> <b class="caret"></b>
+                                <ul class="dropdown-menu" role="menu">
 
 
-<table id="raidBossTB" class="table ui">
-  <thead>
-  	<th>Game</th>
-    <th>Description</th>
-    <th>Created Date</th>
-    <th>Need</th>
+									{% for g in game %}
+									    <li role="presentation"><a role="menuitem" no="{{g.pk}}" tabindex="-1">{{g.name}}</a></li>
+									{% endfor%}
+<!-- 									<option value="{{g.pk}}">{{g.name}}</option>
+ -->
 
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-<!-- <table id="example" class="display" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </thead>
+
+
+         <!--                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Borderlands 1</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Borderlands 2</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Borderlands 3</a></li> -->
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
+                            <!-- <div class="wrap"> -->
+<!--                                 <form action="#" method="post" class="form">
+                                    <div class="pull-left txt"><input type="text" class="form-control" placeholder="Search Topics"></div>
+                                    <div class="pull-right"><button class="btn btn-default" type="button"><i class="fa fa-search"></i></button></div>
+                                    <div class="clearfix"></div>
+                                </form> -->
+
+							<div id="remote">
+								<div style="display:inline-block;height:30px;vertical-align:middle">
+							   		<input class="typeahead" type="text" placeholder=" Dungeon/Instance Name">
+							   	</div>
+							</div>
+
+
+                            <!-- </div> -->
+                        </div>
+                        <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+                            <div class="stnt pull-left">                            
+                                <!-- <form action="/quest/post/" method="post" class="form"> -->
+                                    
+                                    <a href="/quest/post"><button class="btn btn-primary">Post your quest</button></a>
+                                <!-- </form> -->
+                            </div>
+                            <div class="env pull-left"><i class="fa fa-envelope"></i></div>
+
+                            <div class="avatar pull-left dropdown">
+                                <a data-toggle="dropdown" href="#"><img src="{% static "images/avatar.jpg" %}" alt="" /></a> <b class="caret"></b>
+                                <div class="status green">&nbsp;</div>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create account</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <section class="content" style="min-height:450px;">
+                <div class="container">
+                	<!-- info -->
+				{% block postform %}
+
+				<div>
+				</div>
+
+				{% endblock %}
+				<script>
+
+						var raidBoss = {
+							topicList : function(theGame, InstanceName){
+
+								$.getJSON('/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
+									console.log(data);
+									$('#raidBossTB tbody').html('');
+									var tdata = '';
+									for(d in data){
+										tdata += '<tr><td><i class="Shield icon ui"></i>Wildstar</td><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.title+'</a></td>';
+										tdata+='<td>'+data[d].fields.create_date+'</td>';
+										tdata+='<td>'+data[d].fields.quantity+'</td>';
+										tdata+='</tr>';
+									}		
+									$('#raidBossTB tbody').html(tdata);
+
+
+								})
+								.error(function(jqXHR, textStatus, errorThrown) {
+							        console.log("error " + textStatus);
+							        console.log("incoming Text " + jqXHR.responseText);
+				    			})
+							},
+							topics: function(){
+
+
+								$.getJSON('/topics',function(data){
+									console.log(data);
+
+									$('#raidBossTB tbody').html('');
+									var tdata = '';
+									for(d in data){
+										tdata += '<tr><td><i class="Shield icon ui"></i>Wildstar</td><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.title+'</a></td>';
+										tdata+='<td>'+data[d].fields.create_date+'</td>';
+										tdata+='<td>'+data[d].fields.quantity+'</td>';
+										tdata+='</tr>';
+									}		
+
+
+									$('#raidBossTB tbody').html(tdata);
+
+								})
+								.error(function(jqXHR, textStatus, errorThrown) {
+							        console.log("error " + textStatus);
+							        console.log("incoming Text " + jqXHR.responseText);
+				    			})
+							}
+						}
+
+
+					var bestPictures = new Bloodhound({
+					  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
+					  queryTokenizer: Bloodhound.tokenizers.whitespace,
+					  remote: {
+						    url: '/ajax_search/%QUERY',
+						    filter: function(list) {
+						    	
+						      return $.map(list, function(country) { //console.log(country); 
+						      	return { name: country.fields.name, pk:country.pk }; });
+						    }
+					   }	   
+					  });
+					 
+					bestPictures.initialize();
+					 
+					$('#remote .typeahead').typeahead(
+						{
+							highlight:true
+						},
+						{
+					  	name: 'pk',
+					 	displayKey: 'name',
+					 	valueKey:'pk',
+					    source: bestPictures.ttAdapter(),
+					    template: [ '<p class="name">{{pk}}</p>',
+					    '<p class="lang">{{pk}}</p>'].join('')	})
+
+						.bind("typeahead:selected", function(obj, datum, name) {
+							
+							if(!datum){
+								return
+							}
+								var id = datum.pk
+							//window.location.href = '/crm/student/'+datum.pk;
+							var theGame = $('#theGame').attr('no');
+							var InstanceName = datum.name;
+							raidBoss.topicList(theGame, InstanceName)
+							console.log( datum, name);
+						});
+
+						$('.delete').click(function(){
+							var ans = confirm("Are you sure you want to Delete this Record?");
+							if(!ans){
+								return false
+							}
+						})
+
+				//load all 
+
+				$(function(){
+					raidBoss.topics();
+				})
+
+
+				</script>
+
+				<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', 'UA-4867779-5', 'auto');
+				  ga('send', 'pageview');
+
+				</script>
+
+
+				<table id="raidBossTB" class="table ui">
+				  <thead>
+				  	<th>Game</th>
+				    <th>Description</th>
+				    <th>Created Date</th>
+				    <th>Need</th>
+
+				  </thead>
+				  <tbody>
+				  </tbody>
+				</table>
+
+
+
+
+
+
+
+
+
+
+                </div>
+            </section>
+
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-1 col-xs-3 col-sm-2 logo "><!-- <a href="#"><img src="{% static "images/icon2.jpg"%}" alt=""  /></a> --></div>
+                        <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2014, raidboss.net</div>
+                        <div class="col-lg-3 col-xs-12 col-sm-5 sociconcent">
+                            <ul class="socialicons">
+                                <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cloud"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- get jQuery from the google apis -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.js"></script>
  
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Extn.</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
-    </table> -->
+
+        <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+        <script type="text/javascript" src="{% static "rs-plugin/js/jquery.themepunch.plugins.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "rs-plugin/js/jquery.themepunch.revolution.min.js" %}"></script>
+
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+
+
+        <!-- LOOK THE DOCUMENTATION FOR MORE INFORMATIONS -->
+        <script type="text/javascript">
+            
+            // var revapi;
+
+            // jQuery(document).ready(function() {
+            //     "use strict";
+            //     revapi = jQuery('.tp-banner').revolution(
+            //             {
+            //                 delay: 15000,
+            //                 startwidth: 1200,
+            //                 startheight: 278,
+            //                 hideThumbs: 10,
+            //                 fullWidth: "on"
+            //             });
+
+            // });	
+            //ready
+
+        </script>
+
+
+
+<!-- end of theme-->
+<!-- 
+<div class="ui grid">
+	<div class="sixteen wide column">
+		<div class="ui menu">
+		  <a class="active item" href='/'>
+		    <i class="rocket icon red big"></i> RAID A BOSS
+		  </a>
+
+		  <a class="item" href='/'>
+		    <i class="male icon big green"></i> Find Teammate
+		  </a>
+		  <a class="item" href='/quest/post/'>
+		    <i class="yellow exclamation icon big"></i> Post Quest
+		  </a>
+		  <a class="item" href='/login?next=/'>
+		    <i class="user icon big"></i> Login
+		  </a>
+		</div>
+	</div>
+</div>
+
+{% block menu %}
+
+{% endblock %} -->
 </body>
 </html>

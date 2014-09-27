@@ -76,7 +76,7 @@ def register(request):
 		context)
 
 def post_quest(request):
-
+	game = Game.objects.all()
 	context = RequestContext(request)
 	if request.method == 'POST':
 		topic_form = TopicForm(data=request.POST)
@@ -100,7 +100,7 @@ def post_quest(request):
 		items_formset = inlineformset_factory(Topic,Requirement,form=RequirementForm,extra=1)
 		items_forms = items_formset()
 		print items_forms
-		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms},context)
+		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game},context)
 
 def post_verify(request):
 	if request.method == 'POST':
@@ -155,7 +155,7 @@ def ajax_search(request,keyword):
 	return HttpResponse(data, mimetype="application/json") 
 
 def topic_search(request, game_id, instance_name):
-	result_list = Game.objects.filter(Q(pk__exact=game_id )& Q(instance__name__contains=instance_name))
+	result_list = Topic.objects.filter(Q(game_name__exact=game_id )& Q(Instance__name__contains=instance_name))
 	result = serializers.serialize('json', result_list)
 	return HttpResponse(result,mimetype="application/json")
 
