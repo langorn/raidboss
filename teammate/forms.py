@@ -26,7 +26,7 @@ class UserProfileForm(forms.ModelForm):
 class TopicForm(forms.ModelForm):
 	class Meta:
 		model = Topic
-		exclude = ('owner_name','Instance','status','state','chatroom')
+		exclude = ('Instance','owner_name','status','state','chatroom')
 
 
 class RequirementForm(forms.ModelForm):

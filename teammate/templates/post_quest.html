@@ -50,6 +50,14 @@
     <link rel="stylesheet" type="text/css" href="{% static "rs-plugin/css/settings.css" %} "  media="screen" />
 
 
+
+<style>
+.toLeft input, .toLeft select{
+  display:inline-block;
+  width:70px !important;
+}
+
+</style>
 </head>
 <body>
 
@@ -202,11 +210,11 @@ $(document).ready(function(){
 
                             <!-- POST -->
                             <div class="post">
-                                <form action="#" class="form newtopic" method="post">
+                                <form class="form newtopic" method="post">
                                     <div class="postinfotop">
                                         <h2><i class="big green bullhorn icon"></i> Recruit Teammate</h2>
                                     </div>
-
+                                </form>
                                     <!-- acc section -->
                                     <div class="accsection">
                                 
@@ -227,20 +235,21 @@ $(document).ready(function(){
 			</td>
 			<td>
 				<div>
-					<select id="instance">
+					<select id="Instance">
 						<option value="x">-Please Select Instance-</option>
 					</select>
-					<input type="hidden" name="instance">
+					<input type="hidden" name="Instance">
 				</div>
 			</td>
 		</tr>
 		<tr>
 
-			<td>Looking For<!--  <i class="ui huge circular icon Users"></i> -->
+			<td>Looking For<!--  <i class="ui circular icon User"></i><br> -->
+				<!-- <span id="man">0</span> Man -->
 			</td>
 			<td>
 
-				<div style="display:inline-block">
+<!-- 				<div style="display:inline-block">
 					<select id="gameClass"  class="form-control">
 						<option value="x">-Please Select Role-
 						</option>
@@ -249,7 +258,7 @@ $(document).ready(function(){
 						<option value="2">HEALER</option>
 						<option value="3">DPSER</option>
 					</select>
-				</div>
+				</div> -->
 <br>
 
 				<div id="AttrDisplay">
@@ -258,23 +267,25 @@ $(document).ready(function(){
 					<div id="items-form-container">
 					    {% for item_form in items_forms %}
 					        <div class="toLeft" id="item-{{ forloop.counter0 }}">
-					        	<b>Games</b>
+					        	<b>Tank</b>
 					            {{ item_form.id }}
-					            {{ item_form.games }}
-					            <b>Attributes</b>
+					            {{ item_form.tank }}
+					            <b>Healer</b>
 					            {{ item_form.id }}
-					            {{ item_form.attributes }}
+					            {{ item_form.healer }}
 
-					            <b>Value</b>
+					            <b>Dpser</b>
 					           {{ item_form.id }}
-					           {{ item_form.value }}
-
+					           {{ item_form.dpser }}
+					           <b>Teammate</b>
+					           {{ item_form.id }}
+					           {{ item_form.teammate }}
 					            {# <!-- or for crispy forms --> {% crispy item_form %} #}
 					        </div>
 					    {% endfor %}
 					</div>
-					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
-				</div>
+<!-- 					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
+ -->				</div>
 
 				<div id="AttrGroup" class="toLeft"></div>
 			</td>
@@ -289,7 +300,7 @@ $(document).ready(function(){
 		<td><input type="submit" value="SUBMIT" class="ui button green"></td>
 	</tr>
 	</table>
-
+</form>
 </div>
 
 
@@ -298,7 +309,7 @@ $(document).ready(function(){
 	{{items_forms.empty_form }}
 </div>
 </script>
-</form>
+
 
 
 
@@ -443,7 +454,7 @@ $(document).ready(function() {
 					for(var k in data){
 						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
 					}
-					$('#instance').html(options)
+					$('#Instance').html(options)
 			})
 
 
@@ -457,9 +468,9 @@ $(document).ready(function() {
 
 		})
 
-		$('#instance').change(function(){
+		$('#Instance').change(function(){
 			var instance = $(this).val();
-			$('input[name="instance"]').val(instance);
+			$('input[name="Instance"]').val(instance);
 
 		})
 
@@ -490,7 +501,7 @@ $(document).ready(function() {
                                 <div class="divline"></div>
                                 <div class="blocktxt">
                                     <ul class="cats">
-                                        <li><a href="#">Wildstar <span class="badge pull-right">1</span></a></li>
+                                        <li><a>Wildstar <span class="badge pull-right">1</span></a></li>
  <!--                                        <li><a href="#">Vault Keys Giveway <span class="badge pull-right">10</span></a></li>
                                         <li><a href="#">Misc Guns Locations <span class="badge pull-right">50</span></a></li>
                                         <li><a href="#">Looking for Players <span class="badge pull-right">36</span></a></li>

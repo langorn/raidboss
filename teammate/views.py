@@ -84,7 +84,6 @@ def post_quest(request):
 
 		if topic_form.is_valid():
 			topic = topic_form.save(commit=False)
-			print request.user
 			topic.owner_name = request.user
 			topic.save()
 		
@@ -94,7 +93,7 @@ def post_quest(request):
 			return HttpResponseRedirect('/')
 
 		else:
-			return HttpResponseRedirect('/teammate/post_quest')
+			return HttpResponseRedirect('/post_quest')
 	else:
 		topic_form = TopicForm()
 		items_formset = inlineformset_factory(Topic,Requirement,form=RequirementForm,extra=1)
@@ -104,10 +103,9 @@ def post_quest(request):
 
 def post_verify(request):
 	if request.method == 'POST':
-		instanceNo = request.POST.get('instance')
+		instanceNo = request.POST.get('Instance')
 		instances = Instance.objects.get(pk=instanceNo)
 		topic_form = TopicForm(data=request.POST)
-		print topic_form
 		RequirementInlineFormset = inlineformset_factory(Topic,Requirement)
 
 		if topic_form.is_valid():
@@ -117,9 +115,10 @@ def post_verify(request):
 			topic.save()
 
 		formset = RequirementInlineFormset(request.POST)
+		print formset
 		if formset.is_valid():
 			requirements = formset.save(commit=False)
-
+			print requirements
 			for requirement in requirements:
 				requirement.topics = topic
 				requirement.save()
@@ -127,7 +126,7 @@ def post_verify(request):
 			return HttpResponseRedirect('/')
 
 		else:
-			return HttpResponseRedirect('/teammate/post_quest')
+			return HttpResponseRedirect('/post_quest')
 
 #dynamic form value change
 def getInstance(request,game_id):
@@ -171,7 +170,12 @@ def get_topic(request,topic_id):
 	except:
 		comments = []
 	print topic
-	context = {'topic':topic,'comments':comments}	
+
+	try:
+		requirement = Requirement.objects.get(pk=topic_id)
+	except:
+		requirement = []
+	context = {'topic':topic,'comments':comments, 'requirement':requirement}	
 	return render(request,'topic.html',context)
 
 def post_comment(request,topic_id):

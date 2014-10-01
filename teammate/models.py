@@ -50,21 +50,26 @@ class Topic(models.Model):
 	create_date = models.DateTimeField(auto_now=True)
 	status = models.BooleanField(default=True)
 	Instance = models.ForeignKey(Instance)
-	#requirement = models.ForeignKey(Requirement,related_name='topic_requirement')
 	quantity = models.IntegerField(max_length=200)
 	state = models.CharField(max_length=200)
 	status = models.BooleanField(default = True)
 	remark = models.CharField(max_length=200)
 	chatroom = models.CharField(max_length=200)
+	#requirement = models.ForeignKey(Requirement,related_name='topic_requirement')
 
 	def __unicode__(self):
 		return self.title
 
 class Requirement(models.Model):
 	games = models.ForeignKey(Game ,related_name="topic_games")
-	attributes = models.ForeignKey(Attributes)
-	value = models.FloatField()
+	tank = models.IntegerField(max_length=200)
+	healer = models.IntegerField(max_length=200)
+	dpser = models.IntegerField(max_length=200)
+	teammate = models.IntegerField(max_length=200)
 	topics = models.ForeignKey(Topic,related_name="topic_requirement")
+	#attributes = models.ForeignKey(Attributes)
+	#value = models.FloatField()
+
 
 	# def __unicode__(self):
 	# 	return self.attributes
