@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 	url(r'^login/$',views.user_login, name='user_login'),
 	url(r'^chat/$',views.chat, name='chat'),
 	url(r'^call/(?P<peer_id>.+)/$',views.call_to, name='call_to'),
+	url(r'^findUserByDB/$',views.findUserByDB, name='findUserByDB'),
 
 	#post related
 	url(r'^quest/post/$',views.post_quest, name='post_quest'),

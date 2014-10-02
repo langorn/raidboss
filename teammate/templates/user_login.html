@@ -315,8 +315,19 @@ $(document).ready(function(){
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
+        findUserByDB(response.id, response.name);
     });
   }
+
+    function findUserByDB(id,name){
+      $.getJSON('/findUserByDB', 
+                { facebook_id: id, name: name },
+                function() {
+                  //console.log(data);
+                  location.reload(true);
+                });
+      };
+
 </script>
 
 <!--

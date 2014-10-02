@@ -36,12 +36,7 @@ class Skill(models.Model):
 	def __unicode__(self):
 		return self.skill.name
 
-
-
 # user related  - recruit post
-
-
-
 
 class Topic(models.Model):
 	title = models.CharField(max_length=200)
@@ -85,3 +80,12 @@ class Comment(models.Model):
 		return self.message
 
 # Create your models here.
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User,related_name='user_profile')
+    description = models.CharField(max_length=128, null= True,blank=True)
+    facebook_id = models.CharField(max_length=128, null = True,blank=True)
+    
+    def __unicode__(self):
+        return self.user.username
