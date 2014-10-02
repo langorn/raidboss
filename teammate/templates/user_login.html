@@ -312,16 +312,18 @@ $(document).ready(function(){
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
+
       console.log('Successful login for: ' + response.name);
       document.getElementById('status').innerHTML =
         'Thanks for logging in, ' + response.name + '!';
-        findUserByDB(response.id, response.name);
+        findUserByDB(response.id, response.name, response.email,response.gender);
+
     });
   }
 
-    function findUserByDB(id,name){
+    function findUserByDB(id,name,email,gender){
       $.getJSON('/findUserByDB', 
-                { facebook_id: id, name: name },
+                { facebook_id: id, name: name , email:email, gender:gender },
                 function() {
                   //console.log(data);
                   location.reload(true);

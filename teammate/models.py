@@ -86,6 +86,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User,related_name='user_profile')
     description = models.CharField(max_length=128, null= True,blank=True)
     facebook_id = models.CharField(max_length=128, null = True,blank=True)
+    gender = models.CharField(max_length=128, null = True,blank=True)
     
     def __unicode__(self):
         return self.user.username

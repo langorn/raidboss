@@ -28,18 +28,21 @@ def index(request):
 	game = Game.objects.all()
 	return render(request,'teammate/index.html',{'game':game})
 
+
 # user login by FB
 def findUserByDB(request):
     facebook_id = request.GET.get('facebook_id')
     name = request.GET.get('name')
+    email = request.GET.get('email')
+    gender = request.GET.get('gender')
     if facebook_id:
         try:
             user = UserProfile.objects.get(facebook_id=facebook_id)
         except:
             registered = False
             password = User.objects.make_random_password()
-            user = User.objects.create_user(facebook_id, facebook_id, password)
-            profile = UserProfile(user=user,description='facebook',facebook_id=facebook_id)
+            user = User.objects.create_user(email, facebook_id, password)
+            profile = UserProfile(user=user,description='facebook',facebook_id=facebook_id,gender=gender)
             profile.save()
             registered = True
 
@@ -49,7 +52,7 @@ def findUserByDB(request):
         request.session['user'] = user ;
     return HttpResponseRedirect('/')
 
-    
+
 
 def user_login(request):
 	context = RequestContext(request)
