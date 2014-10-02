@@ -11,6 +11,8 @@ urlpatterns = patterns('',
 	url(r'^chat/$',views.chat, name='chat'),
 	url(r'^call/(?P<peer_id>.+)/$',views.call_to, name='call_to'),
 	url(r'^findUserByDB/$',views.findUserByDB, name='findUserByDB'),
+	url(r'^logout/$',views.user_logout, name='user_logout'),
+
 
 	#post related
 	url(r'^quest/post/$',views.post_quest, name='post_quest'),

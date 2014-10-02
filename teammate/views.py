@@ -73,7 +73,9 @@ def user_login(request):
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
 
-
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
 
 def register(request):
 	context = RequestContext(request)
