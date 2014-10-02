@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 	url(r'^chat/$',views.chat, name='chat'),
 	url(r'^call/(?P<peer_id>.+)/$',views.call_to, name='call_to'),
 	url(r'^findUserByDB/$',views.findUserByDB, name='findUserByDB'),
-	url(r'^logout/$',views.logout, name='user_logout'),
+	url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/login?next=123'}),
 
 
 	#post related
