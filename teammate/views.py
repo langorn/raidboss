@@ -51,7 +51,8 @@ def findUserByDB(request):
             #db.session.add(user)
             #db.session.commit()
             #session['user'] = user
-        request.session['user'] = user ;
+        	#request.session['user'] = user ;
+
     return HttpResponseRedirect('/')
 
 
