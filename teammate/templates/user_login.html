@@ -165,7 +165,9 @@ $(document).ready(function(){
                       <div class="accsection">
                   
                             <div id="container" style="min-height:600px;">
-
+{% if user.is_authenticated %}
+  {{user}}
+{% endif %}
                             <div class="userPanel">
                             <h1>Login</h1> 
                             <div style="color:#c5c5c5"><i> No Account ? please <a href="/register/">[register]</a></i></div>

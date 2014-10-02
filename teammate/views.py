@@ -37,11 +37,13 @@ def findUserByDB(request):
     gender = request.GET.get('gender')
     if facebook_id:
         try:
-            user = UserProfile.objects.get(facebook_id=facebook_id)
+			user = UserProfile.objects.get(facebook_id=facebook_id)
+			user.backend = 'django.contrib.auth.backends.ModelBackend'
+			login(request, user)
         except:
             registered = False
             password = User.objects.make_random_password()
-            user = User.objects.create_user(email, facebook_id, password)
+            user = User.objects.create_user(email, email, password)
             profile = UserProfile(user=user,description='facebook',facebook_id=facebook_id,gender=gender)
             profile.save()
             registered = True
@@ -51,7 +53,6 @@ def findUserByDB(request):
             #session['user'] = user
         request.session['user'] = user ;
     return HttpResponseRedirect('/')
-
 
 
 def user_login(request):
