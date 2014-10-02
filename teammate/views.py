@@ -37,7 +37,7 @@ def findUserByDB(request):
     gender = request.GET.get('gender')
     if facebook_id:
         try:
-			user = UserProfile.objects.get(facebook_id=facebook_id)
+			user = User.objects.get(email=email) #UserProfile.objects.get(facebook_id=facebook_id)
 			user.backend = 'django.contrib.auth.backends.ModelBackend'
 			login(request, user)
         except:
