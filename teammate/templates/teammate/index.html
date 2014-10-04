@@ -169,6 +169,10 @@ $(document).ready(function(){
                                 <a data-toggle="dropdown" href="#"><img src="{% static "images/avatar.jpg" %}" alt="" /></a> <b class="caret"></b>
                                 <div class="status green">&nbsp;</div>
                                 <ul class="dropdown-menu" role="menu">
+   									{% if user.is_authenticated %}
+                                     <li role="presentation" style="border-bottom:1px solid #CECECE;margin-bottom:5px;"><a role="menuitem" tabindex="-1" href="#">{{user}}</a></li>
+                                    {% endif %}
+
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">My Profile</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>

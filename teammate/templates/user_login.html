@@ -19,7 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
-
+    <link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 
     <link href="{% static "css/bootstrap.min.css" %} " rel="stylesheet">
 
@@ -90,7 +90,7 @@
 <script>
 
 $(document).ready(function(){
-  $('li ').click(function(){
+  $('.gameList li ').click(function(){
 
   var keyword = $(this).text();
   var gameId = $(this).find('a').attr('no');
@@ -165,9 +165,17 @@ $(document).ready(function(){
                       <div class="accsection">
                   
                             <div id="container" style="min-height:600px;">
-{% if user.is_authenticated %}
-  {{user}}
-{% endif %}
+
+                              <button class="btn btn-fb">Facebook Login</button>
+
+<div>
+  {% if user.is_authenticated %}
+   <span style="font-family: 'Fjalla One', sans-serif;"> {{user}} </span> <button type="button" class="btn btn-default navbar-btn">Sign out</button>
+  {% endif %}
+</div>
+{% if not user.is_authenticated %}
+
+
                             <div class="userPanel">
                             <h1>Login</h1> 
                             <div style="color:#c5c5c5"><i> No Account ? please <a href="/register/">[register]</a></i></div>
@@ -192,6 +200,9 @@ $(document).ready(function(){
                                     </form>
                                 </div>
                             </div>
+
+
+{% endif %}
                         </div>
 
                 </div>

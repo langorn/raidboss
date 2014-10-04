@@ -132,6 +132,10 @@ def post_quest(request):
 		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game},context)
 
 def post_verify(request):
+
+	if not user:
+		return HttpResponseRedirect('/login/?next=/')
+		
 	if request.method == 'POST':
 		instanceNo = request.POST.get('Instance')
 		instances = Instance.objects.get(pk=instanceNo)
