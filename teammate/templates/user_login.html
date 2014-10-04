@@ -173,7 +173,7 @@ $(document).ready(function(){
 
 <div>
   {% if user.is_authenticated %}
-   <span style="font-family: 'Fjalla One', sans-serif;"> {{user}} </span> <button type="button" class="btn btn-default navbar-btn">Sign out</button>
+   <span style="font-family: 'Fjalla One', sans-serif;"> {{user}} </span> <a href="/logout"><button type="button" class="btn btn-default navbar-btn">Sign out</button></a>
   {% endif %}
 </div>
 {% if not user.is_authenticated %}
