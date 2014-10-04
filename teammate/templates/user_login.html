@@ -165,8 +165,11 @@ $(document).ready(function(){
                       <div class="accsection">
                   
                             <div id="container" style="min-height:600px;">
+<!-- 
+                              <button class="btn btn-fb">Facebook Login</button> -->
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
 
-                              <button class="btn btn-fb">Facebook Login</button>
 
 <div>
   {% if user.is_authenticated %}
@@ -351,8 +354,7 @@ $(document).ready(function(){
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+
 
 <div id="status">
 </div>
