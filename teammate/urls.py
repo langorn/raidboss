@@ -6,6 +6,7 @@ urlpatterns = patterns('',
 	
 
 	#user related
+	url(r'^profile/$',views.profile, name='profile'),
 	url(r'^register/$',views.register, name='register'),
 	url(r'^login/$',views.user_login, name='user_login'),
 	url(r'^chat/$',views.chat, name='chat'),

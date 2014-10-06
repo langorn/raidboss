@@ -74,9 +74,9 @@ def user_login(request):
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
 
-def user_edit(request):
+def profile(request):
 
-	return render_to_response('user_edit.html')
+	return render_to_response('profile.html')
 
 def logout(request):
     logout(request)
