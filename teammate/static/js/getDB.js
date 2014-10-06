@@ -1,4 +1,4 @@
-		$(function(){
+	
 				var raidBoss = {
 					topicList : function(theGame, InstanceName){
 
@@ -97,7 +97,7 @@
 
 		//load all 
 
-
+		$(function(){
 			raidBoss.topics();
 		})
 
