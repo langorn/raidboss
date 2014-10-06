@@ -1,54 +1,8 @@
+{% extends "teammate/index.html" %}
 {% load staticfiles %}
-<html>
-<head>
 
-
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-	<script src="{% static "js/typeahead.js" %} "></script>
+{% block content %}
 <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
-
-<title>Gamer Look For Group Website</title>
-<meta name="description" content="for gamer who looking for adventure/dungeon group.">
-
-    <link rel=stylesheet type="text/css" href="{% static "css/style.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/header.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/segment.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/menu.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/grid.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/divider.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/icon.min.css" %} " href="external-stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/button.min.css" %} " >
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/table.min.css" %} " >
-    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/css/semantic.min.css" %} " >
-
-
-</head>
-<body>
-
-{% block menu %}
-
-<div class="ui grid">
-  <div class="sixteen wide column">
-    <div class="ui menu">
-      <a class="active item" href='/'>
-        <i class="rocket icon red big"></i> RAID A BOSS
-      </a>
-
-      <a class="item" href='/'>
-        <i class="male icon big green"></i> Find Teammate
-      </a>
-      <a class="item" href='/quest/post/'>
-        <i class="yellow exclamation icon big"></i> Post Quest
-      </a>
-      <a class="item" href='/login?next=/'>
-        <i class="user icon big"></i> Login
-      </a>
-    </div>
-  </div>
-</div>
-{% endblock %}
 
 <div id="userId"></div>
 <div>
@@ -112,5 +66,4 @@
         </div><!-- end of container div -->
         
 
-</body>
-</html>
+{% endblock %}

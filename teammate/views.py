@@ -74,6 +74,10 @@ def user_login(request):
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
 
+def user_edit(request):
+
+	return render_to_response('user_edit.html')
+
 def logout(request):
     logout(request)
     return HttpResponseRedirect('/')
@@ -135,7 +139,7 @@ def post_verify(request):
 
 	if not user:
 		return HttpResponseRedirect('/login/?next=/')
-		
+
 	if request.method == 'POST':
 		instanceNo = request.POST.get('Instance')
 		instances = Instance.objects.get(pk=instanceNo)
