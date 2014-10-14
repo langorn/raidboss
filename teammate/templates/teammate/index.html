@@ -132,7 +132,7 @@
                                 <!-- </form> -->
                             </div>
                             <div class="env pull-left"><i class="fa fa-envelope"></i></div>
-
+                            {% if user.is_authenticated %}
                             <div class="avatar pull-left dropdown">
                                 <a data-toggle="dropdown" href="#"><img src="{% static "images/avatar.jpg" %}" alt="" /></a> <b class="caret"></b>
                                 <div class="status green">&nbsp;</div>
@@ -143,11 +143,16 @@
 
                                     <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">My Profile</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Inbox</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Log Out</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="/logout">Log Out</a></li>
                                     <li role="presentation"><a role="menuitem" tabindex="-4" href="04_new_account.html">Create account</a></li>
                                 </ul>
                             </div>
+
+                            {% else %}
                             
+                            <a href="/login?next=/"><div class="black ui button"><i class="circular user icon"></i>Login</div></a>
+
+                            {% endif %}
                             <div class="clearfix"></div>
                         </div>
                     </div>
