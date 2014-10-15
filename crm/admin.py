@@ -1,6 +1,6 @@
 from django.contrib import admin
 from crm.models import SearchKeyword, Topic, MainRole, UserProfile
-from teammate.models import Game, Instance , Skill , Topic, Requirement, Comment , Attributes
+from teammate.models import Game, Instance , Skill , Topic, Requirement, Comment , Attributes,Chatroom
 
 # Register your models here.
 
@@ -16,5 +16,5 @@ admin.site.register(Topic)
 admin.site.register(Requirement)
 admin.site.register(Comment)
 admin.site.register(Attributes)
-
+admin.site.register(Chatroom)
 

@@ -87,6 +87,14 @@ class UserProfile(models.Model):
     description = models.CharField(max_length=128, null= True,blank=True)
     facebook_id = models.CharField(max_length=128, null = True,blank=True)
     gender = models.CharField(max_length=128, null = True,blank=True)
-    
+    #chatroom = models.ForeignKey(Chatroom,related_name="userprofile_chatroom")
+
     def __unicode__(self):
         return self.user.username
+
+class Chatroom(models.Model):
+	user = models.ForeignKey(User, related_name='user_chatroom')
+	peer_code = models.CharField(max_length=128,null=True,blank = True)
+	name = models.CharField(max_length=128, null = True,blank=True)
+	def __unicode__(self):
+		return self.user.username

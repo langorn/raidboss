@@ -10,9 +10,13 @@ urlpatterns = patterns('',
 	url(r'^register/$',views.register, name='register'),
 	url(r'^login/$',views.user_login, name='user_login'),
 	url(r'^chat/$',views.chat, name='chat'),
-	url(r'^call/(?P<peer_id>.+)/$',views.call_to, name='call_to'),
+	url(r'^call/(?P<chatroom>.+)/$',views.call_to, name='call_to'),
 	url(r'^findUserByDB/$',views.findUserByDB, name='findUserByDB'),
 	url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/login?next=123'}),
+
+
+	#webrtc
+	url(r'^save_peer_code/$',views.save_peer_code,name='save_peer_code'),
 
 
 	#post related

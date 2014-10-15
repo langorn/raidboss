@@ -10,12 +10,29 @@
 <video autoplay></video>
 
 <script>
+$(function(){
+    $.ajaxSetup({
+      data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+    });
+
+
+  
+})
+
     var peer = new Peer({key: 'uts8vpuagmrc0udi'});
 
 
     peer.on('open', function(id) {
       console.log('My peer ID is: ' + id);
       $('#userId').html(id);
+
+      $.post('/save_peer_code/',{'id':id},function(data){
+        console.log(data);
+      })
+      .error(function(data){
+        console.log(data);
+      })
+
     });
     peer.on('connection', function(conn) {
       conn.on('data', function(data){

@@ -19,7 +19,7 @@ from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
 from teammate.forms import RequirementForm
-from teammate.models import Requirement, Topic
+from teammate.models import Requirement, Topic, Chatroom
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -226,6 +226,26 @@ def post_comment(request,topic_id):
 def chat(request):
 	return render(request,'chat.html')
 
-def call_to(request,peer_id):
-	context = {'peer_id':peer_id}
+def call_to(request,chatroom):
+	ct_room = Chatroom.objects.get(name=chatroom)
+	print ct_room
+	if ct_room:
+		context = {'peer_id':ct_room.peer_code}
 	return render(request, 'call.html',context)
+
+def save_peer_code(request):
+	peer_code = request.POST.get('id')
+	print peer_code
+	user = request.user 
+	print user
+	result = Chatroom.objects.get(user=request.user)
+
+	if not result:
+		ct = Chatroom(user=user,peer_code=peer_code,name=user.username)
+		ct.save()
+	else:
+		result.peer_code = peer_code
+		result.save()
+	return HttpResponse('/')
+
+	#User.objects.get(pk=peer_code)
