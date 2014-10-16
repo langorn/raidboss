@@ -11,8 +11,10 @@
 
 <script>
 $(function(){
+
+    var csrftoken = $.cookie('csrftoken');
     $.ajaxSetup({
-      data: {csrfmiddlewaretoken: '{{csrf_token}}' },
+      data: {csrfmiddlewaretoken: csrftoken },
     });
 
 
