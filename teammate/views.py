@@ -237,15 +237,14 @@ def save_peer_code(request):
 	peer_code = request.POST.get('id')
 	print peer_code
 	user = request.user 
-	print user
-	result = Chatroom.objects.get(user=request.user)
-
-	if not result:
-		ct = Chatroom(user=user,peer_code=peer_code,name=user.username)
-		ct.save()
-	else:
+	try:
+		result = Chatroom.objects.get(user=request.user)
 		result.peer_code = peer_code
 		result.save()
+	except:
+		ct = Chatroom(user=user,peer_code=peer_code,name=user.username)
+		ct.save()
+
 	return HttpResponse('/')
 
 	#User.objects.get(pk=peer_code)
