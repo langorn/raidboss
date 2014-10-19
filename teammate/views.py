@@ -234,7 +234,7 @@ def call_to(request,chatroom):
 	return render(request, 'call.html',context)
 
 def save_peer_code(request):
-	peer_code = request.POST.get('id')
+	peer_code = request.POST['id']
 	print peer_code
 	user = request.user 
 	try:
