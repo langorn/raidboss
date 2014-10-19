@@ -148,9 +148,9 @@
 
 		})
 
-		$('#instance').change(function(){
+		$('#Instance').change(function(){
 			var instance = $(this).val();
-			$('input[name="instance"]').val(instance);
+			$('input[name="Instance"]').val(instance);
 
 		})
 
