@@ -10,8 +10,14 @@
 <video autoplay></video>
 
 <script>
-$(function(){
+// $(function(){
 
+//     //var csrftoken=$.cookie('csrftoken');
+//     $.ajaxSetup({
+//       data: {csrfmiddlewaretoken: csrftoken },
+//     });
+
+// })
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
@@ -31,12 +37,6 @@ $(function(){
 
 
 
-    //var csrftoken=$.cookie('csrftoken');
-    $.ajaxSetup({
-      data: {csrfmiddlewaretoken: csrftoken },
-    });
-
-})
 
 
 
@@ -47,7 +47,7 @@ $(function(){
       console.log('My peer ID is: ' + id);
       $('#userId').html(id);
 
-      $.post('/save_peer_code/',{'id':id},function(data){
+      $.post('/save_peer_code/',{'id':id,'csrfmiddlewaretoken',csrftoken},function(data){
         console.log(data);
       })
       .error(function(data){
