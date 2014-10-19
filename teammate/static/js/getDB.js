@@ -134,6 +134,7 @@
 						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
 					}
 					$('#Instance').html(options)
+					//
 			})
 
 
