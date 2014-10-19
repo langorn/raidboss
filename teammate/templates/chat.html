@@ -47,7 +47,7 @@
       console.log('My peer ID is: ' + id);
       $('#userId').html(id);
 
-      $.post('/save_peer_code/',{'id':id,'csrfmiddlewaretoken',csrftoken},function(data){
+      $.post('/save_peer_code/',{'id':id,'csrfmiddlewaretoken':csrftoken},function(data){
         console.log(data);
       })
       .error(function(data){
