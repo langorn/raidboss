@@ -48,6 +48,8 @@
 				}
 
 
+
+		
 			var bestPictures = new Bloodhound({
 			  datumTokenizer: Bloodhound.tokenizers.obj.whitespace('values'),
 			  queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -96,18 +98,16 @@
 				})
 
 		//load all 
+	$(function(){
+		raidBoss.topics();
+	})
 
-		$(function(){
-			raidBoss.topics();
-		})
-
-
-
+		
+	
 
 
 		$(document).ready(function(){
 			$('li ').click(function(){
-
 			var keyword = $(this).text();
 			var gameId = $(this).find('a').attr('no');
 			$('.gameList a').html(keyword).attr('keyword',keyword);
@@ -115,4 +115,45 @@
 
 
 			})
+
+
+
+		$('.delete').click(function(){
+			var ans = confirm("Are you sure you want to Delete this Record?");
+			if(!ans){
+				return false
+			}
+		})
+
+
+		$('#id_game_name').change(function(){
+			var game_id = $(this).val()
+			$.getJSON('/getInstance/'+game_id,function(data){
+					var options = '';
+					for(var k in data){
+						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+					}
+					$('#Instance').html(options)
+			})
+
+
+			$.getJSON('/getAttrs/'+game_id,function(data){
+					var options = '';
+					for(var k in data){
+						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+					}
+					$('#requirement').html(options)
+			})
+
+		})
+
+		$('#instance').change(function(){
+			var instance = $(this).val();
+			$('input[name="instance"]').val(instance);
+
+		})
+
+
+
+
 		});  
