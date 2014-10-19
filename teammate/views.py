@@ -137,6 +137,7 @@ def post_quest(request):
 
 def post_verify(request):
 
+	user = request.user
 	if not user:
 		return HttpResponseRedirect('/login/?next=/')
 
