@@ -87,7 +87,7 @@ def profile(request):
 
 
 	own_att = []
-	if attitude:
+	try:
 		atts = attitude.split(',')
 		for att in atts:
 			try:
@@ -95,6 +95,8 @@ def profile(request):
 				own_att.append(user_type)
 			except:
 				pass
+	except:
+		pass
 
 	personality = UserType.objects.all()
 	game = Game.objects.all()
