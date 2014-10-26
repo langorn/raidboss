@@ -30,12 +30,12 @@ class MainRole(models.Model):
 	remark = models.CharField(max_length=200)
 	status = models.BooleanField()
 
-class UserProfile(models.Model):
-	user = models.OneToOneField(User)
-	description = models.CharField(max_length=128, null= True,blank=True)
-	facebook_id = models.CharField(max_length=128, null=True, blank=True)
-	def __unicode__(self):
-		return self.user.username
+# class UserProfile(models.Model):
+# 	user = models.OneToOneField(User)
+# 	description = models.CharField(max_length=128, null= True,blank=True)
+# 	facebook_id = models.CharField(max_length=128, null=True, blank=True)
+# 	def __unicode__(self):
+# 		return self.user.username
 
 class SearchKeyword(models.Model):
 	name = models.CharField(max_length=200)

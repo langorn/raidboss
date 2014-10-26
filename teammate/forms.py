@@ -1,7 +1,7 @@
-from crm.models import UserProfile
+# from crm.models import UserProfile
 from django.contrib.auth.models import User
 from django import forms
-from teammate.models import Topic, Requirement
+from teammate.models import Topic, Requirement, UserProfile
 from django.forms.models import inlineformset_factory
 from django.views.generic import CreateView
 from django.shortcuts import redirect
@@ -21,6 +21,11 @@ class UserProfileForm(forms.ModelForm):
 	class Meta:
 		model = UserProfile
 		fields = ('description',)
+
+class AttitudeForm(forms.ModelForm):
+	class Meta:
+		model = UserProfile
+		fields = ('attitude',)
 
 
 class TopicForm(forms.ModelForm):

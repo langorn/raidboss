@@ -12,6 +12,14 @@ class Game(models.Model):
 
 #game related - info
 
+class CharacterAttr(models.Model):
+	user = models.ForeignKey(User)
+	attr = models.CharField(max_length=200)
+	value = models.IntegerField(max_length=200)
+
+	def __unicode__(self):
+		return self.attr
+
 class Attributes(models.Model):
 	name = models.CharField(max_length=200)
 	game = models.ForeignKey(Game)
@@ -19,6 +27,32 @@ class Attributes(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+class Race(models.Model):
+	name = models.CharField(max_length=200)
+	game = models.ForeignKey(Game)
+
+	def __unicode__(self):
+		return self.name
+
+class Job(models.Model):
+	name = models.CharField(max_length=200)
+	game = models.ForeignKey(Game)
+
+	def __unicode__(self):
+		return self.name
+
+class Character(models.Model):
+	name = models.CharField(max_length=200)
+	user = models.ForeignKey(User)
+	game = models.ForeignKey(Game)
+	race = models.ForeignKey(Race)
+	job = models.ForeignKey(Job)
+	desc = models.CharField(max_length=200)
+
+	def __unicode__(self):
+		return self.name
+
 
 class Instance(models.Model):
 	name = models.CharField(max_length=200)
@@ -79,18 +113,6 @@ class Comment(models.Model):
 	def __unicode__(self):
 		return self.message
 
-# Create your models here.
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User,related_name='user_profile')
-    description = models.CharField(max_length=128, null= True,blank=True)
-    facebook_id = models.CharField(max_length=128, null = True,blank=True)
-    gender = models.CharField(max_length=128, null = True,blank=True)
-    #chatroom = models.ForeignKey(Chatroom,related_name="userprofile_chatroom")
-
-    def __unicode__(self):
-        return self.user.username
 
 class Chatroom(models.Model):
 	user = models.ForeignKey(User, related_name='user_chatroom')
@@ -98,3 +120,31 @@ class Chatroom(models.Model):
 	name = models.CharField(max_length=128, null = True,blank=True)
 	def __unicode__(self):
 		return self.user.username
+
+# Create your models here.
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User,related_name='user_profile')
+    description = models.CharField(max_length=128, null= True,blank=True)
+    facebook_id = models.CharField(max_length=128, null = True,blank=True)
+    gender = models.CharField(max_length=128, null = True,blank=True)
+    chatroom = models.ForeignKey(Chatroom, null=True,related_name="userprofile_chatroom")
+    attitude = models.CharField(max_length=128, null = True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username
+
+class UserType(models.Model):
+	name = models.CharField(max_length=128)
+	type = models.IntegerField(max_length=128)
+
+	def __unicode__(self):
+		return self.name
+
+class Personality(models.Model):
+	user = models.ForeignKey(User,related_name='from_user')
+	by_user = models.ForeignKey(User,related_name='by_user')
+	like = models.ForeignKey(UserType)
+	
+	def __unicode__(self):
+		return self.name

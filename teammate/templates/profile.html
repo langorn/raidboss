@@ -4,8 +4,8 @@
 {% block content %}
 
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- Description Modal -->
+<div class="modal fade personality" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,11 +13,94 @@
         <h4 class="modal-title" id="myModalLabel">Tell more about you</h4>
       </div>
       <div class="modal-body">
-        {{da}}
+      <!--   <textarea>{{da}}
+        </textarea> -->
+      <div class="ui form">
+        <div class="field">
+          <label>Description</label>
+          <textarea id="userDesc">{{description}}</textarea>
+        </div>
+      </div>
+
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" id="saveDesc" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Personality Modal -->
+<div class="modal fade " id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select Your Personality</h4>
+      </div>
+      <div class="modal-body">
+        {% for p in personality%}
+          <div style="display:inline-block"><button pid='{{p.id}}' class="personSelect red">{{p}}</button></div>
+        {% endfor %}
+        <input type="hidden" id="attitude">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="saveAttitude" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Character Modal -->
+<div class="modal fade " id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select Your Character</h4>
+      </div>
+      <div class="modal-body">
+
+
+        <select id="gList" class="form-control" style="width:30%;display:inline-block;margin-right:2%">
+          <option value="-"> Select Game</option>
+        {% for g in game%}
+          <option value="{{g.id}}">{{g.name}}</option>
+        {% endfor %}
+        </select>
+
+        <select id="race" class="form-control" style="width:30%;display:inline-block;margin-right:2%">
+          <option value="-"> Select Race</option>
+        </select>
+        <select id="job" class="form-control" style="width:30%;display:inline-block;margin-right:2%">
+          <option value="-"> Select Job</option>
+        </select>
+      <div class="ui form">
+        <div class="field">
+          <label>Character Name</label>
+          <input type="text" class="text" id="name">
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea id="desc"></textarea>
+        </div>
+
+
+      </div>
+<!--         <div>Character Name<input type="text" class="text" id="name"></div>
+        <div>Description<input type="text" class="text" id="desc"></div>
+         -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="saveCharacter" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -33,27 +116,62 @@
 
         <h1>ABOUT ME</h1>
         <h4>A little description for myself</h4>
-        <i><p style="font-family: 'Open Sans Condensed', sans-serif;">I don't talk a lot. (reversed).I have no intention of talking in large crowds. <a><u><i id="editDesc" class="edit icon"  data-toggle="modal" data-target="#myModal"></i></u></a></p></i>
-
+        {% for u in userprofile %}
+          {{u}}
+        {% endfor%}
+        <i><p style="font-family: 'Open Sans Condensed', sans-serif;">{{description}} ....<a><u><i id="editDesc" class="edit icon" ></i></u></a></p></i>
+<!--  data-toggle="modal" data-target="#myModal" -->
     </div> 
     <div class="" style="text-align:center;font-family: 'Fjalla One', sans-serif">
         <hr>
         <h1>Personality</h1>
-        <div style="display:inline-block"><button class="red">GODLIKE</button></div>
-        <div style="display:inline-block"><button class="red">NEVER GIVEUP</button></div>
+
+        {% if not own_att%}
+
+          <div style="display:inline-block"><button class="red">Choose One</button></div>
+
+        {% endif %}
+        {% for att in own_att %}
+                  <div style="display:inline-block"><button class="red">{{att.name}}</button></div>
+        {% endfor %}
+<!--         <div style="display:inline-block"><button class="red">NEVER GIVEUP</button></div>
         <div style="display:inline-block"><button class="red">BORN KILLER</button></div>
         <div style="display:inline-block"><button class="red">LEADERSHIP</button></div>
-        <div style="display:inline-block"><button class="red">KIND</button></div>
-        <div style="display:inline-block"><i class="edit icon"></i></div>
+        <div style="display:inline-block"><button class="red">KIND</button></div> -->
+        <div style="display:inline-block"><i id="editPersonality" class="edit icon" data-toggle=""></i></div>
 
     </div> 
 
     <div class="" style="text-align:center;font-family: 'Fjalla One', sans-serif">
         <hr>
-        <h1>OWN CHARACTER</h1>
-        <div style="display:inline-block"><button>UNDEAD WARRIOR</button></div>
-        <div style="display:inline-block"><button>HUMAN MAGES</button></div>
-        <div style="display:inline-block"><i class="edit icon"></i></div>
+        <h1 style="display:inline-block">OWN CHARACTER</h1><div style="display:inline-block"><i id="editCharacter" class="edit icon"></i></div>
+        <div class="ui five connected items" style="padding-left:50px;">
+
+          {% for c in character %}
+<!--             <div style="display:inline-block"> {{c.name}} <div class="userClass"> {{c.race}} {{c.job}}</div></div> -->
+            <div class="item">
+              <div class="image">
+
+
+                <img src="{% static "images/char1.png" %}" width="0" height="100">
+                <a class="star ui corner label">
+                  <i class="star icon"></i>
+                </a>
+              </div>
+              <div class="content">
+                <div class="name">{{c.name}}</div>
+                <div class="name">{{c.race}} {{c.job}}</div>
+                <p class="description">{{c.desc}}</p>
+              </div>
+            </div>
+
+
+          {% endfor %}
+
+        </div>
+        <!-- <div style="display:inline-block"><button>UNDEAD WARRIOR</button></div> -->
+        <!-- <div style="display:inline-block"><button>HUMAN MAGES</button></div> -->
+
 
     </div> 
 
@@ -63,11 +181,144 @@
 
 
     $('#editDesc').click(function(){
-        $('.small.modal')
-          .modal('show')
-        ;
+        $('#myModal').modal();
 
     })
+
+    $('#editPersonality').click(function(){
+        $('#myModal2').modal();
+    })
+    $('#editCharacter').click(function(){
+        $('#myModal3').modal();
+    })
+
+
+    $('.personSelect').click(function(){
+
+
+      $(this).css('border','1px solid black');
+      $(this).addClass('selectUnit');
+
+
+      attitudeList = [];
+      $('.selectUnit').each(function(){
+
+
+        var attId = $(this).attr('pid');
+        attitudeList.push(attId);
+
+      })
+        
+
+    })
+
+
+    /* save attitude*/
+    $('#saveAttitude').click(function(){
+
+        var aList = '';
+
+        var aLength = attitudeList.length;
+        for(var k in attitudeList){
+          aList += attitudeList[k];
+
+          if(k!=aLength-1){
+            console.log(k+'...'+aLength);
+            aList+=','
+          } 
+        }
+        console.log(aList);
+
+
+        var desc = $('#userDesc').val();
+        $.ajax({
+          'url':'/user_attitude/save/',
+          'type':'POST',
+          'datatype':'json',
+          'data':{
+            'attitude':aList,
+            'csrfmiddlewaretoken':csrftoken
+          }
+        })
+        .success(function(){
+          $('#myModal').modal('hide');
+        })
+    })
+
+    /* select user game/race/job */
+    $('#gList').change(function(){
+      var game_id = $(this).val();
+
+      $.getJSON('/job/'+game_id, function(data){
+        console.log(data);
+        var options = '';
+        for(var k in data){
+            options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>';
+            
+        }
+        $('#job').html(options);
+
+      })
+      $.getJSON('/race/'+game_id, function(data){
+        var options = '';
+        for(var k in data){
+            options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>';
+            
+        }
+        $('#race').html(options);
+        console.log(data);
+      })
+
+    })
+
+      /* save user description*/
+      $('#saveDesc').click(function(){
+        console.log('savedesc')
+        var desc = $('#userDesc').val();
+        $.ajax({
+          'url':'/user_desc/save/',
+          'type':'POST',
+          'datatype':'json',
+          'data':{
+            'desc':desc,
+            'csrfmiddlewaretoken':csrftoken
+          }
+        })
+        .success(function(){
+          $('#myModal').modal('hide');
+        })
+      })
+
+
+      /* save new character*/
+      $('#saveCharacter').click(function(){
+
+        var gList = $('#gList').val();
+        var race = $('#race').val();
+        var job = $('#job').val();
+        var name = $('#name').val();
+        var desc = $('#desc').val();
+
+        $.ajax({
+          'url':'/character/save/',
+          'type':'POST',
+          'datatype':'json',
+          'data':{
+            'game_id':gList,
+            'race_id':race,
+            'job_id':race,
+            'name':name,
+            'desc':desc,
+            'csrfmiddlewaretoken':csrftoken
+          }
+        })
+        .success(function(){
+          $('#myModal2').modal('hide');
+        })
+
+
+      })
+
 </script>
 
   {% endblock %}

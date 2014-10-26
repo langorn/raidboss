@@ -1225,3 +1225,16 @@ a.down:hover {
         padding: 0;
     }
 }
+
+
+
+.userChar{
+    border:1px solid;
+}
+
+.userClass{
+  background-color:black;
+  color:white;
+  opacity:0.6;
+}
+

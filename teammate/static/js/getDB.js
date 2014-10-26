@@ -1,4 +1,6 @@
 	
+var attitudeList = [];
+
 				var raidBoss = {
 					topicList : function(theGame, InstanceName){
 
@@ -107,54 +109,72 @@
 
 
 		$(document).ready(function(){
-			$('li ').click(function(){
-			var keyword = $(this).text();
-			var gameId = $(this).find('a').attr('no');
-			$('.gameList a').html(keyword).attr('keyword',keyword);
-			$('#theGame').attr('no',gameId);
+				$('li ').click(function(){
+				var keyword = $(this).text();
+				var gameId = $(this).find('a').attr('no');
+				$('.gameList a').html(keyword).attr('keyword',keyword);
+				$('#theGame').attr('no',gameId);
 
 
+				})
+
+
+
+			$('.delete').click(function(){
+				var ans = confirm("Are you sure you want to Delete this Record?");
+				if(!ans){
+					return false
+				}
 			})
 
 
+			$('#id_game_name').change(function(){
+				var game_id = $(this).val()
+				$.getJSON('/getInstance/'+game_id,function(data){
+						var options = '';
+						for(var k in data){
+							options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+						}
+						$('#Instance').html(options)
+						//
+				})
 
-		$('.delete').click(function(){
-			var ans = confirm("Are you sure you want to Delete this Record?");
-			if(!ans){
-				return false
-			}
-		})
 
+				$.getJSON('/getAttrs/'+game_id,function(data){
+						var options = '';
+						for(var k in data){
+							options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
+						}
+						$('#requirement').html(options)
+				})
 
-		$('#id_game_name').change(function(){
-			var game_id = $(this).val()
-			$.getJSON('/getInstance/'+game_id,function(data){
-					var options = '';
-					for(var k in data){
-						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
-					}
-					$('#Instance').html(options)
-					//
 			})
 
+			$('#Instance').change(function(){
+				var instance = $(this).val();
+				$('input[name="Instance"]').val(instance);
 
-			$.getJSON('/getAttrs/'+game_id,function(data){
-					var options = '';
-					for(var k in data){
-						options += '<option value="'+data[k].pk+'">'+data[k].fields.name+'</option>'
-					}
-					$('#requirement').html(options)
 			})
-
-		})
-
-		$('#Instance').change(function(){
-			var instance = $(this).val();
-			$('input[name="Instance"]').val(instance);
-
-		})
 
 
 
 
 		});  
+
+
+		    function getCookie(name) {
+		        var cookieValue = null;
+		        if (document.cookie && document.cookie != '') {
+		            var cookies = document.cookie.split(';');
+		            for (var i = 0; i < cookies.length; i++) {
+		                var cookie = jQuery.trim(cookies[i]);
+		                // Does this cookie string begin with the name we want?
+		                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                    break;
+		                }
+		            }
+		        }
+		        return cookieValue;
+		    }
+		    var csrftoken = getCookie('csrftoken');

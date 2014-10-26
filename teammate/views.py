@@ -18,8 +18,8 @@ import os
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
-from teammate.forms import RequirementForm
-from teammate.models import Requirement, Topic, Chatroom
+from teammate.forms import RequirementForm, AttitudeForm
+from teammate.models import Requirement, Topic, Chatroom, Personality, UserType, Race, Job, Character, UserProfile
 from django.core.context_processors import csrf
 
 # Create your views here.
@@ -74,9 +74,33 @@ def user_login(request):
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
 
-def profile(request):
 
-	return render_to_response('profile.html')
+@login_required(login_url='/login/?next=/')
+def profile(request):
+	user = request.user
+	userprofile = UserProfile.objects.filter(user=user)
+	description = ''
+	for u in userprofile:
+		print u
+		description = u.description
+		attitude = u.attitude
+
+
+	own_att = []
+	if attitude:
+		atts = attitude.split(',')
+		for att in atts:
+			try:
+				user_type = UserType.objects.get(pk=att)
+				own_att.append(user_type)
+			except:
+				pass
+
+	personality = UserType.objects.all()
+	game = Game.objects.all()
+	character = Character.objects.filter(user=user)
+
+	return render(request,'profile.html',{'personality':personality,'game':game,'character':character,'description':description,'own_att':own_att})
 
 def logout(request):
     logout(request)
@@ -135,6 +159,7 @@ def post_quest(request):
 		print items_forms
 		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game},context)
 
+
 def post_verify(request):
 
 	user = request.user
@@ -192,6 +217,19 @@ def ajax_search(request,keyword):
 	data = serializers.serialize('json', result_list, fields=('name'))
 	return HttpResponse(data, mimetype="application/json") 
 
+@login_required(login_url='/login/?next=/')
+def race_search(request, game_id):
+	result_list = Race.objects.filter(Q(game_id__exact=game_id ))
+	result = serializers.serialize('json', result_list)
+	return HttpResponse(result,mimetype="application/json")
+
+@login_required(login_url='/login/?next=/')
+def job_search(request, game_id):
+	result_list = Job.objects.filter(Q(game_id__exact=game_id ))
+	result = serializers.serialize('json', result_list)
+	return HttpResponse(result,mimetype="application/json")
+
+
 def topic_search(request, game_id, instance_name):
 	result_list = Topic.objects.filter(Q(game_name__exact=game_id )& Q(Instance__name__contains=instance_name))
 	result = serializers.serialize('json', result_list)
@@ -217,6 +255,7 @@ def get_topic(request,topic_id):
 	context = {'topic':topic,'comments':comments, 'requirement':requirement}	
 	return render(request,'topic.html',context)
 
+@login_required(login_url='/login/?next=/')
 def post_comment(request,topic_id):
 	topic = Topic.objects.get(pk=topic_id)
 	user = request.user
@@ -234,6 +273,7 @@ def call_to(request,chatroom):
 		context = {'peer_id':ct_room.peer_code}
 	return render(request, 'call.html',context)
 
+@login_required(login_url='/login/?next=/')
 def save_peer_code(request):
 	peer_code = request.POST['id']
 	print peer_code
@@ -248,4 +288,55 @@ def save_peer_code(request):
 
 	return HttpResponse('/')
 
-	#User.objects.get(pk=peer_code)
+@login_required(login_url='/login/?next=/')
+def save_character(request):
+	user = request.user
+	game_id = request.POST['game_id']
+	race_id = request.POST['race_id']
+	job_id = request.POST['job_id']
+	name = request.POST['name']
+	desc = request.POST['desc']
+
+	game = Game.objects.get(pk=game_id)
+	race = Race.objects.get(pk=race_id)
+	job = Job.objects.get(pk=job_id)
+
+	character = Character(name=name, user=user, game=game, race=race, job=job, desc=desc)
+	character.save()
+
+	return HttpResponse('/profile')
+
+@login_required(login_url='/login/?next=/')
+def save_userdesc(request):
+	user = request.user
+	try:
+		userprofile = UserProfile.objects.get(user=user)
+		userprofile.description = request.POST['desc']
+		userprofile.save()
+		#print 1
+	except:
+		profile_form = UserProfileForm(data=request.POST)
+		user_profile = profile_form.save(commit=False)
+		user_profile.user = user
+		user_profile.save()
+		#print 2
+
+
+	return HttpResponse('/profile')
+
+@login_required(login_url='/login/?next=/')
+def save_attitude(request):
+	user = request.user
+	try:
+		#print 1
+		userprofile = UserProfile.objects.get(user=user)
+		userprofile.attitude = request.POST['attitude']
+		userprofile.save()
+	except:
+		#print 2
+		profile_form = AttitudeForm(data=request.POST)
+		user_profile = profile_form.save(commit=False)
+		user_profile.user = user
+		user_profile.save()
+
+	return HttpResponse('/profile')
