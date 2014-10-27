@@ -242,6 +242,11 @@
         })
         .success(function(){
           $('#myModal').modal('hide');
+          window.location.reload();
+        })
+        .error(function(){
+          alert('save failed!');
+          window.location.reload();
         })
     })
 
@@ -286,6 +291,11 @@
         })
         .success(function(){
           $('#myModal').modal('hide');
+          window.location.reload();
+        })
+        .error(function(){
+          alert('save failed!');
+          window.location.reload();
         })
       })
 
@@ -314,8 +324,12 @@
         })
         .success(function(){
           $('#myModal2').modal('hide');
+          window.location.reload();
         })
-
+        .error(function(){
+          alert('save failed!');
+          window.location.reload();
+        })
 
       })
 
