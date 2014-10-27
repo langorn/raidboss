@@ -34,6 +34,19 @@ class TopicForm(forms.ModelForm):
 		exclude = ('Instance','owner_name','status','state','chatroom')
 
 
+class RequireForm(forms.ModelForm):
+	class Meta:
+		model = Requirement
+		exclude = ('games','topics')
+
+
+	# games = models.ForeignKey(Game ,related_name="topic_games")
+	# tank = models.IntegerField(max_length=200)
+	# healer = models.IntegerField(max_length=200)
+	# dpser = models.IntegerField(max_length=200)
+	# teammate = models.IntegerField(max_length=200)
+	# topics = models.ForeignKey(Topic,related_name="topic_requirement")
+
 class RequirementForm(forms.ModelForm):
 	class Meta:
 		model = Requirement

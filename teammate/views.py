@@ -18,7 +18,7 @@ import os
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.forms.models import inlineformset_factory
-from teammate.forms import RequirementForm, AttitudeForm
+from teammate.forms import RequirementForm, AttitudeForm, RequireForm
 from teammate.models import Requirement, Topic, Chatroom, Personality, UserType, Race, Job, Character, UserProfile
 from django.core.context_processors import csrf
 
@@ -153,13 +153,15 @@ def post_quest(request):
 			return HttpResponseRedirect('/')
 
 		else:
-			return HttpResponseRedirect('/post_quest')
+			print formset
+			return HttpResponseRedirect('/quest/post/')
 	else:
 		topic_form = TopicForm()
 		items_formset = inlineformset_factory(Topic,Requirement,form=RequirementForm,extra=1)
 		items_forms = items_formset()
+		require_form = RequireForm()
 		print items_forms
-		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game},context)
+		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game, 'require_form':require_form},context)
 
 
 def post_verify(request):
@@ -180,19 +182,27 @@ def post_verify(request):
 			topic.Instance = instances
 			topic.save()
 
-		formset = RequirementInlineFormset(request.POST)
-		print formset
-		if formset.is_valid():
-			requirements = formset.save(commit=False)
-			print requirements
-			for requirement in requirements:
-				requirement.topics = topic
-				requirement.save()
+		require_form =RequireForm(request.POST)
+		if require_form.is_valid():
+			requirements = require_form.save(commit=False)
+			requirements.topics = topic
+			requirements.games = topic.game_name
+			requirements.save() 
 
-			return HttpResponseRedirect('/')
+	return HttpResponseRedirect('/')
+		# formset = RequirementInlineFormset(request.POST)
+		# print formset
+		# if formset.is_valid():
+		# 	requirements = formset.save(commit=False)
+		# 	print requirements
+		# 	for requirement in requirements:
+		# 		requirement.topics = topic
+		# 		requirement.save()
 
-		else:
-			return HttpResponseRedirect('/post_quest')
+		# 	return HttpResponseRedirect('/')
+
+		# else:
+		# 	return HttpResponseRedirect('/quest/post')
 
 #dynamic form value change
 def getInstance(request,game_id):
@@ -244,16 +254,18 @@ def topics(request):
 
 def get_topic(request,topic_id):
 	topic = Topic.objects.get(pk=topic_id)
+
+	requirement = Requirement.objects.filter(topics=topic)
 	try:
 		comments = Comment.objects.filter(topic_name=topic)
 	except:
 		comments = []
 	print topic
 
-	try:
-		requirement = Requirement.objects.get(pk=topic_id)
-	except:
-		requirement = []
+	# try:
+	# 	requirement = Requirement.objects.get(pk=topic_id)
+	# except:
+	# 	requirement = []
 	context = {'topic':topic,'comments':comments, 'requirement':requirement}	
 	return render(request,'topic.html',context)
 

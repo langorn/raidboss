@@ -40,6 +40,17 @@
                     
         </table>
     </div>
+    <div>
+
+{% for r in requirement%}
+    <div style="display:inline-block"><div class="ui green button massive"><i class="circular inverted user icon"></i>TANK  {{r.tank}}</div></div>
+    <div style="display:inline-block"><div class="ui green button massive"><i class="circular inverted user icon"></i>HEALER  {{r.healer}}</div></div>
+    <div style="display:inline-block"><div class="ui green button massive"><i class="circular inverted user icon"></i>DPSER  {{r.dpser}}</div></div>
+    <div style="display:inline-block"><div class="ui green button massive"><i class="circular inverted user icon"></i>TEAMMATE  {{r.teammate}}</div></div>
+{% endfor%}
+    </div>
+
+
 
 
     <div id="container" style="min-height:300px;">

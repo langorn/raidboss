@@ -62,8 +62,10 @@
 			</td>
 			<td>
 			<br>
-
-				<div id="AttrDisplay">
+			<div>
+				{{require_form.as_p}}
+			</div>
+<!-- 				<div id="AttrDisplay">
 					
 					{{ items_forms.management_form }}
 					<div id="items-form-container">
@@ -82,13 +84,14 @@
 					           <b>Teammate</b>
 					           {{ item_form.id }}
 					           {{ item_form.teammate }}
-					            {# <!-- or for crispy forms --> {% crispy item_form %} #}
+					            {#  {% crispy item_form %} #}
 					        </div>
-					    {% endfor %}
+					    {% endfor %} -->
+					    <!-- or for crispy forms -->
+<!-- 					</div>
+					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
 					</div>
-<!-- 					<a href="#" id="add-item-button" class="btn btn-info add-item">Add New</a>
- -->				</div>
-
+ -->
 				<div id="AttrGroup" class="toLeft"></div>
 			</td>
 		</tr>
