@@ -67,9 +67,11 @@ def user_login(request):
 			if user.is_active:
 				print 'useris active'
 				login(request, user)
-				return HttpResponseRedirect('/abc')
+				return HttpResponseRedirect('/')
 			else:
-				return HttpResponseRedirect('/profile') #("Invalid login details supplied")
+				return HttpResponseRedirect('/') #("Invalid login details supplied")
+		else:
+			return HttpResponseRedirect('/oooo')
 	else:
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
