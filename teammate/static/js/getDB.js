@@ -210,7 +210,7 @@ var attitudeList = [];
 				$('li ').click(function(){
 				var keyword = $(this).text();
 				var gameId = $(this).find('a').attr('no');
-				$('.gameList a').html(keyword).attr('keyword',keyword);
+				$('.gameList a').eq(0).html(keyword).attr('keyword',keyword);
 				$('#theGame').attr('no',gameId);
 
 
@@ -266,15 +266,6 @@ var attitudeList = [];
 				}
 				window.location.href="/logout";
 			})
-
-
-
-
-
-
-
-
-
 		});  
 
 
