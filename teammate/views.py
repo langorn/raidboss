@@ -69,7 +69,7 @@ def user_login(request):
 				login(request, user)
 				return HttpResponseRedirect(next)
 			else:
-				return HttpResponse("Invalid login details supplied")
+				return HttpResponseRedirect('/') #("Invalid login details supplied")
 	else:
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)

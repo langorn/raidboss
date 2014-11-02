@@ -33,7 +33,7 @@
                             <div style="color:#c5c5c5"><i> Forget Password ? please <a href="/register/">[get password]</a></i></div>
                             <div class="ui form">
                                
-                                    <form id="login_form" method="post" action="/login/">
+                                    <form id="login_form" method="post" action="/login/?next=/">
                                         {% csrf_token %}
                                          <div class="field">
                                         <label for="id_username">Username: </label>
