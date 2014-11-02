@@ -63,7 +63,7 @@ def user_login(request):
 		password = request.POST['password']
 		next = request.POST['next']
 		user = authenticate(username=user, password=password)
-		if user is not None:
+		if user not None:
 			if user.is_active:
 				print 'useris active'
 				login(request, user)
@@ -71,7 +71,7 @@ def user_login(request):
 			else:
 				return HttpResponseRedirect('/') #("Invalid login details supplied")
 		else:
-			return HttpResponseRedirect('/oooo')
+			return HttpResponseRedirect('/login?next=/')
 	else:
 		next = request.GET['next']
 		return render_to_response('user_login.html',{'next':next},context)
