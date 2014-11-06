@@ -249,6 +249,13 @@ def topic_search(request, game_id, instance_name):
 	result = serializers.serialize('json', result_list)
 	return HttpResponse(result,mimetype="application/json")
 
+def topic_by_instance(request, game_id, instance_id):
+	result_list = Topic.objects.filter(Q(game_name__exact=game_id )& Q(Instance__pk__exact=instance_id))
+	result = serializers.serialize('json', result_list)
+	return HttpResponse(result,mimetype="application/json")
+
+
+
 def topics(request):
 	result_list = Topic.objects.all()
 	result = serializers.serialize('json', result_list)
@@ -356,3 +363,14 @@ def save_attitude(request):
 		user_profile.save()
 
 	return HttpResponse('/profile')
+
+
+def list_game(request):
+	result_list = Game.objects.all()
+	result = serializers.serialize('json', result_list)
+	return HttpResponse(result, mimetype="application/json")
+
+def list_dungeon(request, game_id):
+	result_list = Instance.objects.filter(Q(game_id__exact=game_id))
+	result = serializers.serialize('json', result_list)
+	return HttpResponse(result, mimetype="application/json")

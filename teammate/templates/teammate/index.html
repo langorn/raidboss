@@ -6,8 +6,10 @@
 
 {% block js %}
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
 	<script src="{% static "js/typeahead.js" %} "></script>
 	<script src="{% static "js/getDB.js" %} "></script>
+
 <title>Gamer Look For Group Website</title>
 <meta name="description" content="for gamer who looking for adventure/dungeon group.">
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
@@ -17,6 +19,8 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Fjalla+One|Amatic+SC|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
 	<script src="{% static "js/jspkg/jquery.dynatable.js" %} "></script>
+    <script src="{% static "js/underscore.js" %} "></script>
+
 	<link rel=stylesheet type="text/css" href="{% static "js/jspkg/jquery.dynatable.css" %} " href="external-stylesheet.css">
 
     <link rel=stylesheet type="text/css" href="{% static "css/style1.css" %} " href="external-stylesheet.css">
@@ -28,6 +32,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/grid.min.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/divider.min.css" %} " href="external-stylesheet.css">
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/icon.min.css" %} " href="external-stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/label.min.css" %} " href="external-stylesheet.css">    
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/elements/button.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/form.min.css" %} " >
     <link rel="stylesheet" type="text/css" href="{% static "js/semantic/collections/message.min.css" %} " >
@@ -63,6 +68,30 @@
     {% endblock %}
 
 </head>
+
+<script type="text/template" class="template"  id='gameImages'>
+     <% _.each(items,function(item,key,list){ %>
+
+       <div class="item" gameId="<%- item.id %>" instId="<%- item.inst %>" level="<%- item.level %>" >
+        <div class="image">
+          <img src="{% static "images/game/"%}<%- item.photo_id %>.png">
+          <a class="like ui corner label">
+            <i class="like icon"></i>
+          </a>
+        </div>
+        <div class="content">
+          <div class="name"><%- item.name %>
+<span style="font-size:25pt;color:#2ecc71;"><i class="male icon"></i>5</span>
+  </div>
+          <p class="description"><%- item.description %></p>
+          <div class="extra">
+               
+          </div>
+        </div>
+      </div>
+
+     <% }); %>
+</script>
 <body>
 
    <div class="container-fluid">
@@ -78,20 +107,9 @@
                         <div class="dropdown gameList">
                                 <a data-toggle="dropdown" id="theGame" href="#" class="dropdown-toggle" style="font-family:verdana;font-size:10pt;padding-left:30px;" >Select Your Game</a> <b class="caret"></b>
                                 <ul class="dropdown-menu" role="menu">
-
-
 									{% for g in game %}
 									    <li role="presentation"><a role="menuitem" no="{{g.pk}}" tabindex="-1">{{g.name}}</a></li>
 									{% endfor%}
-<!-- 									<option value="{{g.pk}}">{{g.name}}</option>
- -->
-
-
-
-         <!--                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Borderlands 1</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="#">Borderlands 2</a></li>
-                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="#">Borderlands 3</a></li> -->
-
                                 </ul>
                             </div>
                         </div>
@@ -152,9 +170,15 @@
 				</div>
 
 				{% endblock %}
+                <div id="back">
+                </div>
+
+                    <div class="ui stackable items" id="gameCollection">
 
 
-				<table id="raidBossTB" class="table ui">
+                   </div>
+
+				<table id="raidBossTB" class="table ui" style="display:none">
 				  <thead>
 				  	<th>Game</th>
 				    <th>Description</th>
@@ -224,6 +248,9 @@
 		  ga('send', 'pageview');
 
         </script>
+
+
+
 {% endblock %}
 </body>
 </html>

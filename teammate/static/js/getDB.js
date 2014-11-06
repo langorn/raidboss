@@ -3,8 +3,10 @@ var attitudeList = [];
 
 				var raidBoss = {
 					topicList : function(theGame, InstanceName){
-
+						console.log(theGame+'...'+InstanceName);
+						$('#gameCollection').html('');
 						$.getJSON('/topic/search/'+theGame+'/'+InstanceName+'/',function(data){
+							
 							console.log(data);
 							$('#raidBossTB tbody').html('');
 							var tdata = '';
@@ -15,6 +17,30 @@ var attitudeList = [];
 								tdata+='</tr>';
 							}		
 							$('#raidBossTB tbody').html(tdata);
+
+
+						})
+						.error(function(jqXHR, textStatus, errorThrown) {
+					        console.log("error " + textStatus);
+					        console.log("incoming Text " + jqXHR.responseText);
+		    			})
+					},
+					byInstance : function(theGame, InstanceId){
+						console.log(theGame+'...'+InstanceId);
+						$('#gameCollection').html('');
+						$.getJSON('/topic/by_instance/'+theGame+'/'+InstanceId+'/',function(data){
+							
+							console.log(data);
+							$('#raidBossTB tbody').html('');
+							var tdata = '';
+							for(d in data){
+								tdata += '<tr><td><i class="Shield icon ui"></i>Wildstar</td><td><a href="/topic/'+data[d].pk+'">'+data[d].fields.title+'</a></td>';
+								tdata+='<td>'+data[d].fields.create_date+'</td>';
+								tdata+='<td>'+data[d].fields.quantity+'</td>';
+								tdata+='</tr>';
+							}		
+							$('#raidBossTB tbody').html(tdata);
+							$('#raidBossTB').show();
 
 
 						})
@@ -46,6 +72,67 @@ var attitudeList = [];
 					        console.log("error " + textStatus);
 					        console.log("incoming Text " + jqXHR.responseText);
 		    			})
+					},
+					listGame: function(){
+
+						$.getJSON('/listGame',function(data){
+							console.log(data);
+							var items = [];
+
+							for(var k in data){
+								var game = {};
+								game['name']= data[k].fields.name;
+								game['description'] = data[k].fields.description;
+								game['type'] = data[k].fields.type;
+								game['id'] = data[k].pk;
+								game['photo_id'] = data[k].pk;
+								game['level'] = 0;
+								game['inst'] = 0;
+								items.push(game);
+							}
+
+							// var template = $('#gameImages').html();
+							// $("#gameCollection").html(_.template(template,{'items':items}));
+							var template = _.template(($('#gameImages').html()))
+							var resultinghtml = template({items:items})
+							$("#gameCollection").html(resultinghtml);
+
+						})
+						.error(function(jqXHR, textStatus, errorThrown) {
+					        console.log("error " + textStatus);
+					        console.log("incoming Text " + jqXHR.responseText);
+		    			})
+					},
+					listDungeon:function(gameId){
+
+						$.getJSON('/listDungeon/'+gameId+'/',function(data){
+							var items = [];
+
+							for(var k in data){
+								console.log(data[k]);
+								var game = {};
+								game['name']= data[k].fields.name;
+								game['description'] = data[k].fields.description;
+								game['type'] = data[k].fields.type;
+								game['id'] = data[k].pk;
+								game['photo_id'] = 'd'+data[k].pk;
+								game['level'] = 1;
+								game['inst'] = data[k].pk;
+								items.push(game);
+							}
+
+							// var template = $('#gameImages').html();
+							// $("#gameCollection").html(_.template(template,{'items':items}));
+							var template = _.template(($('#gameImages').html()))
+							var resultinghtml = template({items:items})
+							$("#gameCollection").html(resultinghtml);
+
+						})
+						.error(function(jqXHR, textStatus, errorThrown) {
+					        console.log("error " + textStatus);
+					        console.log("incoming Text " + jqXHR.responseText);
+		    			})
+
 					}
 				}
 
@@ -101,7 +188,7 @@ var attitudeList = [];
 
 		//load all 
 	$(function(){
-		raidBoss.topics();
+		raidBoss.listGame();
 	})
 
 		
@@ -110,7 +197,7 @@ var attitudeList = [];
 
 		$(document).ready(function(){
 
-				/* FB */
+				 /* FB */
 				 // This is called with the results from from FB.getLoginStatus().
 				  function statusChangeCallback(response) {
 				    console.log('statusChangeCallback');
@@ -215,17 +302,40 @@ var attitudeList = [];
 				var gameId = $(this).find('a').attr('no');
 				$('.gameList a').eq(0).html(keyword).attr('keyword',keyword);
 				$('#theGame').attr('no',gameId);
-
-
 				})
-
-
 
 			$('.delete').click(function(){
 				var ans = confirm("Are you sure you want to Delete this Record?");
 				if(!ans){
 					return false
 				}
+			})
+
+			$('#gameCollection').on('click','.item',function(){
+				
+				var gameId = $(this).attr('gameId');
+				var level = $(this).attr('level');
+				var inst = $(this).attr('instId');
+				// alert(level);
+				if(level==0){
+					// $('#gameCollection .item').attr('level',1);
+					
+				}else{
+					// alert(level);
+					raidBoss.byInstance(gameId,inst);
+					return
+				}
+				$("#gameCollection").html('');
+				raidBoss.listDungeon(gameId);
+				$("#gameCollection").prev('div').html('<button class="ui button">BACK</button>');
+
+			})
+
+			$('#back').click(function(){
+
+				// $(this).hide();
+				$('#raidBossTB').hide();
+				raidBoss.listGame();
 			})
 
 
@@ -288,3 +398,6 @@ var attitudeList = [];
 		        return cookieValue;
 		    }
 		    var csrftoken = getCookie('csrftoken');
+
+
+

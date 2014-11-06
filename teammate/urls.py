@@ -20,6 +20,9 @@ urlpatterns = patterns('',
 	#webrtc
 	url(r'^save_peer_code/$',views.save_peer_code,name='save_peer_code'),
 
+	#game related
+	url(r'^listGame/$',views.list_game, name='list_game'),
+	url(r'^listDungeon/(?P<game_id>.+)/$',views.list_dungeon, name='list_dungeon'),
 
 	#post related
 	url(r'^quest/post/$',views.post_quest, name='post_quest'),
@@ -32,6 +35,7 @@ urlpatterns = patterns('',
 	
 	#search for topic
 	url(r'^topic/search/(?P<game_id>.+)/(?P<instance_name>.+)/$',views.topic_search,name='topic_search'),
+	url(r'^topic/by_instance/(?P<game_id>.+)/(?P<instance_id>.+)/$',views.topic_by_instance,name='topic_by_instance'),
 	url(r'^topics/$',views.topics, name='topics'),
 	url(r'^topic/(?P<topic_id>\d+)/$',views.get_topic, name='topic_get'),
 	
