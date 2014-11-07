@@ -59,6 +59,7 @@ class Instance(models.Model):
 	type = models.CharField(max_length=200)  #dungeon/instance/adventure
 	description = models.CharField(max_length=200)
 	game = models.ForeignKey(Game)
+	priority = models.IntegerField(max_length=200,default=0)
 
 	def __unicode__(self):
 		return self.name
