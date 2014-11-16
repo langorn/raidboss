@@ -76,7 +76,6 @@ var attitudeList = [];
 					listGame: function(){
 
 						$.getJSON('/listGame',function(data){
-							console.log(data);
 							var items = [];
 
 							for(var k in data){
@@ -88,9 +87,10 @@ var attitudeList = [];
 								game['photo_id'] = data[k].pk;
 								game['level'] = 0;
 								game['inst'] = 0;
+								game['post_count'] = data[k].fields.post_count;
 								items.push(game);
 							}
-
+							console.log(items);
 							// var template = $('#gameImages').html();
 							// $("#gameCollection").html(_.template(template,{'items':items}));
 							var template = _.template(($('#gameImages').html()))
@@ -118,6 +118,7 @@ var attitudeList = [];
 								game['photo_id'] = 'd'+data[k].pk;
 								game['level'] = 1;
 								game['inst'] = data[k].pk;
+								game['post_count'] = data[k].fields.post_count;
 								items.push(game);
 							}
 
