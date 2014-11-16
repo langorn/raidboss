@@ -6,6 +6,8 @@ class Game(models.Model):
 	type = models.CharField(max_length=200)
 	description = models.CharField(max_length=200)
 	website = models.CharField(max_length=200)
+	priority = models.IntegerField(max_length=5)
+	post_count = models.IntegerField(max_length=5)
 
 	def __unicode__(self):
 		return self.name
@@ -60,6 +62,7 @@ class Instance(models.Model):
 	description = models.CharField(max_length=200)
 	game = models.ForeignKey(Game)
 	priority = models.IntegerField(max_length=200,default=0)
+	post_count = models.IntegerField(max_length=5)
 
 	def __unicode__(self):
 		return self.name
