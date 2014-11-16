@@ -152,17 +152,26 @@ def post_quest(request):
 		if formset.is_valid():
 			formset.save()
 
+			game_id = request.POST['game']
+			print game_id
+			theGame = Game.objects.get(pk=game_id)
+			game_count = Topic.objects.filter(game=theGame).count()
+			theGame.post_count = game_count
+			theGame.save()
+			print theGame
+
+
 			return HttpResponseRedirect('/')
 
 		else:
-			print formset
+			#print formset
 			return HttpResponseRedirect('/quest/post/')
 	else:
 		topic_form = TopicForm()
 		items_formset = inlineformset_factory(Topic,Requirement,form=RequirementForm,extra=1)
 		items_forms = items_formset()
 		require_form = RequireForm()
-		print items_forms
+		#print items_forms
 		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game, 'require_form':require_form},context)
 
 
@@ -190,6 +199,16 @@ def post_verify(request):
 			requirements.topics = topic
 			requirements.games = topic.game_name
 			requirements.save() 
+
+		game_id = request.POST.get('game_name')
+		theGame = Game.objects.get(pk=game_id)
+		game_count = Topic.objects.filter(game_name=theGame).count()
+		theGame.post_count = game_count
+		theGame.save()
+
+		instance_count = Topic.objects.filter(Instance=instances).count() #Instance.objects.filter(pk=instanceNo).count()
+		instances.post_count = instance_count
+		instances.save()
 
 	return HttpResponseRedirect('/')
 		# formset = RequirementInlineFormset(request.POST)
