@@ -200,15 +200,18 @@ def post_verify(request):
 			requirements.games = topic.game_name
 			requirements.save() 
 
-		game_id = request.POST.get('game_name')
-		theGame = Game.objects.get(pk=game_id)
-		game_count = Topic.objects.filter(game_name=theGame).count()
-		theGame.post_count = game_count
-		theGame.save()
+		try:		
+			game_id = request.POST.get('game_name')
+			theGame = Game.objects.get(pk=game_id)
+			game_count = Topic.objects.filter(game_name=theGame).count()
+			theGame.post_count = game_count
+			theGame.save()
 
-		instance_count = Topic.objects.filter(Instance=instances).count() #Instance.objects.filter(pk=instanceNo).count()
-		instances.post_count = instance_count
-		instances.save()
+			instance_count = Topic.objects.filter(Instance=instances).count() #Instance.objects.filter(pk=instanceNo).count()
+			instances.post_count = instance_count
+			instances.save()
+		except:
+			pass
 
 	return HttpResponseRedirect('/')
 		# formset = RequirementInlineFormset(request.POST)
