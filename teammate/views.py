@@ -182,6 +182,7 @@ def post_verify(request):
 		return HttpResponseRedirect('/login/?next=/')
 
 	if request.method == 'POST':
+		game_id = request.POST.get('game_name')
 		instanceNo = request.POST.get('Instance')
 		instances = Instance.objects.get(pk=instanceNo)
 		topic_form = TopicForm(data=request.POST)
@@ -201,7 +202,6 @@ def post_verify(request):
 			requirements.save() 
 
 		try:		
-			game_id = request.POST.get('game_name')
 			theGame = Game.objects.get(pk=game_id)
 			game_count = Topic.objects.filter(game_name=theGame).count()
 			theGame.post_count = game_count
