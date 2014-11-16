@@ -213,7 +213,15 @@ def post_verify(request):
 		except:
 			pass
 
-	return HttpResponseRedirect('/')
+		return HttpResponseRedirect('/')
+	else:
+		topic_form = TopicForm()
+		items_formset = inlineformset_factory(Topic,Requirement,form=RequirementForm,extra=1)
+		items_forms = items_formset()
+		require_form = RequireForm()
+		#print items_forms
+		return render_to_response('post_quest.html',{'topic_form':topic_form, 'items_forms':items_forms, 'game':game, 'require_form':require_form},context)
+
 		# formset = RequirementInlineFormset(request.POST)
 		# print formset
 		# if formset.is_valid():
