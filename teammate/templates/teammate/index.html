@@ -105,29 +105,29 @@
 						</script>
 
                         <div class="dropdown gameList">
-                                <a data-toggle="dropdown" id="theGame" href="#" class="dropdown-toggle" style="font-family:verdana;font-size:10pt;padding-left:30px;" >Select Your Game</a> <b class="caret"></b>
+<!--                                 <a data-toggle="dropdown" id="theGame" href="#" class="dropdown-toggle" style="font-family:verdana;font-size:10pt;padding-left:30px;" >Select Your Game</a> <b class="caret"></b>
                                 <ul class="dropdown-menu" role="menu">
 									{% for g in game %}
 									    <li role="presentation"><a role="menuitem" no="{{g.pk}}" tabindex="-1">{{g.name}}</a></li>
 									{% endfor%}
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
-							<div id="remote">
+<!-- 							<div id="remote">
 								<div style="display:inline-block;height:30px;vertical-align:middle">
 							   		<input class="typeahead" type="text" placeholder=" Dungeon/Instance Name">
 							   	</div>
-							</div>
+							</div> -->
 
 
-                            <!-- </div> -->
                         </div>
                         <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
                             <div class="stnt pull-left">                            
                                 <!-- <form action="/quest/post/" method="post" class="form"> -->
                                     
-                                    <a href="/quest/post"><button class="btn btn-primary">Post your quest</button></a>
+                                    <a  href="/quest/post"><button class="btn btn-primary">
+                                        <i class="large Exclamation icon"></i>Looking For Group</button></a>
                                 <!-- </form> -->
                             </div>
                             <div class="env pull-left"><i class="fa fa-envelope"></i></div>
