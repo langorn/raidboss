@@ -25,8 +25,8 @@
                             <!-- POST -->
                             <div class="post">
                                 <form class="form newtopic" method="post">
-                                    <div class="postinfotop">
-                                        <h2><i class="big green bullhorn icon"></i> Recruit Teammate</h2>
+                                    <div class="postinfotop" style="font-family:arial;">
+                                        <h1><i class="big green bullhorn icon"></i> Looking For Group</h1>
                                     </div>
                                 </form>
                                     <!-- acc section -->
@@ -62,7 +62,7 @@
 			</td>
 			<td>
 			<br>
-			<div>
+			<div id="requires">
 				{{require_form.as_p}}
 			</div>
 <!-- 				<div id="AttrDisplay">
@@ -157,6 +157,10 @@ $(document).ready(function() {
                            $(this).parent('div').hide();
                    })
                    $('select').addClass('form-control');
+
+
+                   $('#id_remark').css('height',100);
+                   $('#requires p').css('width',75).css('padding-left','10').css('float','left');
                })
 
 

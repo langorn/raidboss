@@ -31,7 +31,10 @@ class AttitudeForm(forms.ModelForm):
 class TopicForm(forms.ModelForm):
 	class Meta:
 		model = Topic
-		exclude = ('Instance','owner_name','status','state','chatroom')
+		labels = {
+            'remark': ('Description'), 'game_name':('Game')
+        }
+		exclude = ('Instance','owner_name','status','state','chatroom','quantity')
 
 
 class RequireForm(forms.ModelForm):

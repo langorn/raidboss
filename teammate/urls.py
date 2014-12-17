@@ -5,12 +5,20 @@ urlpatterns = patterns('',
 	url(r'^$',views.index, name='index'),
 	
 
+	#websocket 
+	# url("", include('django_socketio.urls')),
+
+
 	#user related
 	url(r'^profile/$',views.profile, name='profile'),
 	url(r'^register/$',views.register, name='register'),
 	url(r'^login/$',views.user_login, name='user_login'),
-	url(r'^chat/$',views.chat, name='chat'),
-	url(r'^call/(?P<chatroom>.+)/$',views.call_to, name='call_to'),
+	url(r'^peerjs/chat/$',views.chat, name='chat'),
+	url(r'^peerjs/call/(?P<chatroom>.+)/$',views.call_to, name='call_to'),
+	url(r'^chat/$',views.webrtc_chat, name='chat'),
+	url(r'^call/(?P<chatroom>.+)/$',views.webrtc_call_to, name='call_to'),
+
+
 	url(r'^findUserByDB/$',views.findUserByDB, name='findUserByDB'),
 	url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/login?next=123'}),
 	url(r'^character/save/',views.save_character,name='save_character'),

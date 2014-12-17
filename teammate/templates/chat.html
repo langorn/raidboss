@@ -25,6 +25,17 @@
 
 
     var peer = new Peer({key: 'uts8vpuagmrc0udi'});
+    console.log(peer);
+
+    
+    peer.onicecandidate = function(result) {
+        // if you already set OfferToReceiveAudio:true and OfferToReceiveVideo:true
+        console.log(result)
+        // if(renegotiating) return;
+        
+        // otherwise, you MUST NOT use {if-block} here
+        // {if-block} means don't add new candidates; also, don't share
+    };
 
 
     peer.on('open', function(id) {
@@ -44,6 +55,10 @@
         // Will print 'hi!'
         console.log(data);
       });
+      conn.on('close', function(err) { 
+            alert(conn.peer + ' has left the chat.') 
+      }); 
+
     });
 
         navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;

@@ -1,0 +1,65 @@
+{% extends "teammate/index.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+
+
+
+<div id="userId"></div>
+<video autoplay></video>
+
+<script>
+
+  function onUserMediaSuccess(stream){
+    video.src = URL.createObjectURL(stream);
+  }
+
+  function onUserMediaError(stream){
+    console.log('error');
+  }
+
+  navigator.webkitGetUserMedia(
+      {audio:true, video:true},
+      onUserMediaSuccess,
+      onUserMediaError
+  )
+
+  var pc = new RTCPeerConnection({
+    iceServers:[
+      {url: 'stun:stun.l.google.com:19302'}
+    ]
+  })
+
+  pc.onicecandidate = onAddCandidate;
+  pc.onaddstream = onAddStream;
+
+  pc.addStream(stream);
+
+
+  pc.createOffer(function(offer){
+    pc.setLocalDescription(offer,function(){
+
+      webSocket.emit('message',{
+        type:'offer',
+        offer:offer
+      })
+
+
+    },function(err){
+
+    });
+  })
+
+
+</script>
+    <div id="container" style="min-height:600px;">
+        
+    </div>
+
+
+
+
+        </div><!-- end of container div -->
+        
+{% endblock %}

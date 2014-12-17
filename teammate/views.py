@@ -147,6 +147,7 @@ def post_quest(request):
 		if topic_form.is_valid():
 			topic = topic_form.save(commit=False)
 			topic.owner_name = request.user
+			topic.quantity = 0
 			topic.save()
 		
 		if formset.is_valid():
@@ -192,6 +193,7 @@ def post_verify(request):
 			topic = topic_form.save(commit=False)
 			topic.owner_name = request.user
 			topic.Instance = instances
+			topic.quantity = 0
 			topic.save()
 
 		require_form =RequireForm(request.POST)
@@ -325,6 +327,18 @@ def call_to(request,chatroom):
 	if ct_room:
 		context = {'peer_id':ct_room.peer_code}
 	return render(request, 'call.html',context)
+
+
+def webrtc_chat(request):
+	return render(request,'webrtc_chat.html')
+
+def webrtc_call_to(request,chatroom):
+	ct_room = Chatroom.objects.get(name=chatroom)
+	print ct_room
+	if ct_room:
+		context = {'peer_id':ct_room.peer_code}
+	return render(request, 'webrtc_call.html',context)
+
 
 @login_required(login_url='/login/?next=/')
 def save_peer_code(request):
