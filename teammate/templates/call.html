@@ -2,147 +2,111 @@
 {% load staticfiles %}
 
 {% block content %}
-<script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+<!-- <script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+ -->
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script> -->
+  <script src="{% static "js/socket.io-1.2.1.js" %} "></script>
+  <script>
+  var socket = io.connect('http://raidboss.hanchakra.webfactional.com:13997/');
+  console.log('yohoooo!!!!!!')
+
+   socket.on('whoshere', function(msg){
+        console.log('...........................')
+        console.log(msg);
+        // console.log('message: ' + msg);
+        // io.emit('chat message', msg);
+
+        var video = document.createElement("video");
+        video.id = 'video'+msg;
+        $('#users').append('<button class="ui button callHim" videoId="'+msg+'"><i class="circular user icon"></i>'+msg+'</button>');
+         $('#videoCollect').append(video);
+
+    });
+
+  $('form').submit(function(){
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+
+
+  </script>
+
 
 <div id="userId"></div>
+<div id="videoCollect"></div>
 <div>
   <input type="text" id="callToWho">
   <div id="calling">Calling</div>
 </div>
-
+<div id="users"></div>
 <!-- <video  autoplay></video>
 <video  autoplay></video> -->
-<video id="my-video" autoplay></video>
-<video id="his-video" autoplay></video>
-<video id="her-video" autoplay></video>
+
 <script>
+
+
     var peer = new Peer({key: 'uts8vpuagmrc0udi'});
+    var pId = null;
+    peer.on('open', function(id) {
+      console.log('My peer ID is: ' + id);
+      $('#userId').html(id);
+      socket.emit('users', id);
+    });
 
-    var uid = '';
-
-    // peer.on('open', function(id) {
-    //   console.log('My peer ID is: ' + id);
-    //   uid = id;
-    // });
-    // var conn = peer.connect(uid);
-    // conn.on('open', function(){
-    //   conn.send('hi!');
-    // });
-
-    // conn.on('data', function(data) {
-    //   console.log('Received', data);
-    // });
-
-
-    // $('#calling').click(function(){
-    //   var toNum =$('#callToWho').val();
-    //   callTo(toNum);
-
-    // })
-
-peer.onicecandidate = onAddCandidate;
+    peer.on('connection', function(conn) {
+      conn.on('data', function(data){
+        // Will print 'hi!'
+        console.log(data);
+      });
+    });
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 
-var totalConnection = peer.connections.length;
-console.log('<----------------------------->');
-console.log(totalConnection);
-      for (var i = 1; i <= totalConnection; i++) {
-          console.log(peer.connections);
-          var cid = ''; 
-          var c = peer.connect(i); 
-          console.log(c.datachannel);
-          c.on('open', function(id) { 
-              console.log('My peer ID is: ' + id);
-              cid = id;
-              connect(c); 
-              c.send("hello"); 
-          }); 
-          
-          c.on('error', function(err) { 
-              alert(err); 
-          }); 
+        $('body').on('click','.callHim',function(){
+            var videoId = $(this).attr('videoId');
+            // callUser(videoId);
+            var toUser = videoId; //'{{peer_id}}';
+            callTo(toUser);
 
-              // if you already set OfferToReceiveAudio:true and OfferToReceiveVideo:true
-              //if(renegotiating) return;
-              
-              // otherwise, you MUST NOT use {if-block} here
-              // {if-block} means don't add new candidates; also, don't share
-          };
+        })
 
 
-          console.log(peer.connections);
-          var toUser = '{{peer_id}}';
-          console.log(toUser);
-          navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        
+   
+
+        peer.on('call', function(call) {
           navigator.getUserMedia({video: true, audio: true}, function(stream) {
-             console.log(i);
-            // try{
-              var call = peer.call(toUser, stream);
-              call.on('stream', function(remoteStream) {
-                  console.log(remoteStream);
-                // Show stream in some video/canvas element.
-                    // var video = document.getElementsByTagName('video')[i]
-                    // // var video = document.querySelector('video')[i];
-                    // video.src = window.URL.createObjectURL(remoteStream);
-                    console.log(i);
-                    // $('#my-video').prop('src', URL.createObjectURL(remoteStream));
-                    $('#my-video').prop('src', URL.createObjectURL(remoteStream));
-
-                if(i==1){
-                    console.log('my-video');
-                    $('#my-video').prop('src', URL.createObjectURL(remoteStream));
-                }
-                if(i==2){
-                  console.log('his-video');
-                    $('#his-video').prop('src', URL.createObjectURL(remoteStream));
-                }
-                if(i==3){
-                  console.log('her-video');
-                    $('#her-video').prop('src', URL.createObjectURL(remoteStream));
-                }
-              });
-            // }catch(err){  
-              // console.log(i);
-            // }
-
+            call.answer(stream); // Answer the call with an A/V stream.
+            call.on('stream', function(remoteStream) {
+              // Show stream in some video/canvas element.
+                var video = document.querySelector('video');
+                video.autoplay=true;
+                video.src = window.URL.createObjectURL(remoteStream);
+            });
           }, function(err) {
             console.log('Failed to get local stream' ,err);
           });
-
-    
-
-
-
-    
-
-    // callTo(toUser);
-    function callTo(toUser){
-
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      navigator.getUserMedia({video: true, audio: true}, function(stream) {
-        var call = peer.call(toUser, stream);
-        call.on('stream', function(remoteStream) {
-          // Show stream in some video/canvas element.
-              var video = document.querySelector('video');
-              video.src = window.URL.createObjectURL(remoteStream);
         });
-      }, function(err) {
-        console.log('Failed to get local stream' ,err);
-      });
-    }
 
-
-function onAddCandidate(event) {
-      console.log(event);
-
-    var candidate = event.candidate;
-    // As before, we are using websocket connection to
-    // send data from one user to another.
-    // webSocket.emit('message', {
-    //     type: 'candidate',
-    //     candidate: candidate
-    // });
-}
+     function callTo(toUser){
+          navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+          navigator.getUserMedia({video: true, audio: true}, function(stream) {
+            var call = peer.call(toUser, stream);
+            call.on('stream', function(remoteStream) {
+              // Show stream in some video/canvas element.
+                  var video = document.querySelector('video');
+                  video.autoplay = true;
+                  video.src = window.URL.createObjectURL(remoteStream);
+            });
+          }, function(err) {
+            console.log('Failed to get local stream' ,err);
+          });
+        }
 
 </script>
     <div id="container" style="min-height:600px;">
